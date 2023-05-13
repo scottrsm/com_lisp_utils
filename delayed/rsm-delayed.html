@@ -1,0 +1,57 @@
+<head><title>rsm.delayed</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Delayed Lists" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="delayed, infinite lists, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.delayed</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>Overloads the names of the usual set of list functions with stream versions
+(delayed lists). These functions will work with ordinary lists or ordinary lists
+combined with delayed lists.
+
+REQUIRES: packages rsm.queue and rsm.filter.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+car       :</b> Delayed list version of car.<b style="color:darkblue">
+cdr       :</b> Delayed list version of cdr.<b style="color:darkblue">
+cycle     :</b> Form a stream consisting of a repeated cycle.<b style="color:darkblue">
+drop      :</b> Remove some number of elements from a delayed list.<b style="color:darkblue">
+delayed   :</b> Type for delayed list.<b style="color:darkblue">
+delayed-p :</b> Predicate for a delayed list.<b style="color:darkblue">
+list      :</b> Delayed list version of list.<b style="color:darkblue">
+mapcar    :</b> Mapcar for delayed lists.<b style="color:darkblue">
+nth       :</b> Nth for delayed lists.<b style="color:darkblue">
+repeat    :</b> Form a delayed list consisting of a repeated value.<b style="color:darkblue">
+take      :</b> Return a list formed by retrieving some number of elements of
+            a stream.<b style="color:darkblue">
+zip-with  :</b> Form a delayed list by "zipping" together two
+            delayed lists using a zip function.</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">car<b style="color=blue">&nbsp; &nbsp(stream)</b></h2><pre>The "car" for a delayed list; it is identical to cl:car when <em style="color:blue">&lt;stream&gt;</em> is an
+ordinary list.</pre>
+<h2 style="color=darkblue">cdr<b style="color=blue">&nbsp; &nbsp(stream)</b></h2><pre>The "cdr" for a delayed list; it is identical to cl:cdr when <em style="color:blue">&lt;stream&gt;</em> is an
+ordinary list.</pre>
+<h2 style="color=darkblue">cons<b style="color=blue">&nbsp; &nbsp(first &amp;body body)</b></h2><pre>A delayed "cons".</pre>
+<h2 style="color=darkblue">cycle<b style="color=blue">&nbsp; &nbsp(list)</b></h2><pre>Repeat the list, <em style="color:blue">&lt;list&gt;</em>, indefinitely.</pre>
+<h2 style="color=darkblue">delayed-p<b style="color=blue">&nbsp; &nbsp(stream)</b></h2><pre>Predicate that determines if <em style="color:blue">&lt;stream&gt;</em> is a delayed list.</pre>
+<h2 style="color=darkblue">drop<b style="color=blue">&nbsp; &nbsp(n stream)</b></h2><pre>Drop the first <em style="color:blue">&lt;n&gt;</em> elements from <em style="color:blue">&lt;stream&gt;</em>, return the resulting (possibly
+delayed) list. Will work when <em style="color:blue">&lt;stream&gt;</em> is an ordinary lists as well.  In this
+case the result is an ordinary list.</pre>
+<h2 style="color=darkblue">filter<b style="color=blue">&nbsp; &nbsp(stream pruner)</b></h2><pre>Filter a stream (or an ordinary list) by excluding elements that satisfy
+<em style="color:blue">&lt;pruner&gt;</em>. If <em style="color:blue">&lt;stream&gt;</em> is an ordinary list an ordinary list is returned.</pre>
+<h2 style="color=darkblue">list<b style="color=blue">&nbsp; &nbsp(&amp;rest elems)</b></h2><pre>A delayed "list".</pre>
+<h2 style="color=darkblue">mapcar<b style="color=blue">&nbsp; &nbsp(func &amp;rest streams)</b></h2><pre>Mapcar for delayed lists. However, will work with a mixture of delayed lists
+and ordinary lists.</pre>
+<h2 style="color=darkblue">nth<b style="color=blue">&nbsp; &nbsp(n stream)</b></h2><pre>Nth for delayed lists. Works when <em style="color:blue">&lt;stream&gt;</em> is an ordinary list.</pre>
+<h2 style="color=darkblue">repeat<b style="color=blue">&nbsp; &nbsp(x)</b></h2><pre>Repeat x indefinitely.</pre>
+<h2 style="color=darkblue">take<b style="color=blue">&nbsp; &nbsp(n stream)</b></h2><pre>Take the first <em style="color:blue">&lt;n&gt;</em> elements from <em style="color:blue">&lt;stream&gt;</em>, returning them as a list.  Works
+when <em style="color:blue">&lt;stream&gt;</em> is an ordinary list.</pre>
+<h2 style="color=darkblue">zip-with<b style="color=blue">&nbsp; &nbsp(s1 s2 &amp;optional (zip-func #'cons))</b></h2><pre>A Lisp version of Haskell's zipWith function. Will work with mixtures of
+ordinary lists and delayed lists.</pre></td></tr></table></body>

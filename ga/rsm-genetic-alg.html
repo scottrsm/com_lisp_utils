@@ -1,0 +1,101 @@
+<head><title>rsm.genetic-alg</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Genetic Algorithm Systems" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="genetic, algorithms, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.genetic-alg</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>A gene pool is a list of genes. 
+ Each gene is made up of characters from a vector of letters. 
+ Succeeding generations are formed by choosing pairs of genes randomly;
+ splicing them randomly; and then possibly mutating them. 
+ Although the choice of pairs is random, it is not uniformly random; 
+ pairs which are more "fit" are selected more frequently.
+ Fitness is determined by a fitness function that is supplied by the user.
+ The value of any fitness function should be &gt;= the value *base-fitness-value*
+ defined below.
+ The two primary macros/functions used are &lt;defgenetic&gt; and
+ &lt;solve-all-genetic-problems&gt;. The first (defgenetic) defines genetic problems 
+ for genetic programming while the second solves them.
+
+REQUIRES: package rsm.cache
+
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+genetic:</b> The name of the structure that stores
+         the genetic information necessary to 
+         run a simulation.
+   
+    ACCESS FUNCTIONS TO STRUCTURE GENETIC (named below as G).
+   <b style="color:darkblue">
+g-name            :</b> G name (string).<b style="color:darkblue">
+g-mutation-rate   :</b> G mutation rate (fixnum).<b style="color:darkblue">
+g-fitness-function:</b> G fitness function(compiled function).<b style="color:darkblue">
+g-alphabet        :</b> G alphabet (vector).<b style="color:darkblue">
+g-pool            :</b> G initial gene pool (list of genes).
+   
+         BEGIN PRIMARY EXPORTS
+<b style="color:darkblue">
+defgenetic:</b> Macro to define a genetic problem.
+   <b style="color:darkblue">
+solve-all-genetic-problems:</b> Solve all registered problems.<b style="color:darkblue">
+solve-genetic-problems    :</b> Solve genetic problems in a name list.<b style="color:darkblue">
+solve-genetic-problem     :</b> Solve a named genetic problem.
+   <b style="color:darkblue">
+clear-genetic-problems    :</b> Clear the registry of genetic problems.
+   <b style="color:darkblue">
+display-solutions         :</b> Display the solutions.<b style="color:darkblue">
+display-solution          :</b> Display a solution.
+
+         END PRIMARY EXPORTS
+   <b style="color:darkblue">
+ga-sim:</b> Simulate the evolution of a gene pool.
+
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">clear-genetic-problems<b style="color=blue"> ()</b></h2><pre>Clear out the genetic problem definitions introduced by defgenetic.</pre>
+<h2 style="color=darkblue">defgenetic<b style="color=blue">&nbsp; &nbsp(name &amp;key mutation-rate fitness-function alphabet pool)</b></h2><pre>Define a genetic problem (store it by its name in a hash.)</pre>
+<h2 style="color=darkblue">display-solution<b style="color=blue">&nbsp; &nbsp(solution)</b></h2><pre>Display a solution.</pre>
+<h2 style="color=darkblue">display-solutions<b style="color=blue">&nbsp; &nbsp(solutions)</b></h2><pre>Display the solutions.</pre>
+<h2 style="color=darkblue">g-alphabet<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">g-fitness-function<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">g-mutation-rate<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">g-name<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">g-pool<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">ga-sim<b style="color=blue">&nbsp; &nbsp(n gene-pool fitness-function mutation-rate gene-alphabet &amp;key
+ (gene-length-constant? t) (print-pools? nil) (print-intermediate? nil) (k 1))</b></h2><pre>Run a genetic algorithm simulation <em style="color:blue">&lt;n&gt;</em> times with initial gene pool
+<em style="color:blue">&lt;gene-pool&gt;</em> which is a list of genes (each gene is a list from
+alphabet <gene-alphabet); a fitness function <em style="color:blue">&lt;fitness-function&gt;</em> which
+determines the fitness of a given gene (fitness values produced should be 
+greater than *base-fitness-value*; a mutation rate
+<em style="color:blue">&lt;mutation-rate&gt;</em> which determines the rate at which gene mutation
+occurs; <em style="color:blue">&lt;gene-length-constant?&gt;</em> which determines if the length of a
+gene is constant; and, <em style="color:blue">&lt;print-intermediate?&gt;</em> which determines whether
+to print intermediate gene pools. If <em style="color:blue">&lt;print-pools?&gt;</em> is nil, no
+generations are printed regardless of the value of <em style="color:blue">&lt;print-intermediate?&gt;</em>. 
+Store the best k solutions in a cache.</pre>
+<h2 style="color=darkblue">solve-all-genetic-problems<b style="color=blue">&nbsp; &nbsp(n &amp;key (gene-length-constant? t) (print-pools? nil) (print-intermediate? nil)
+ (mutation-rate nil) (k 1))</b></h2><pre>Solve the list of genetic problems introduced by defgenetic.
+Run the simulation <em style="color:blue">&lt;n&gt;</em> times. Return the best <em style="color:blue">&lt;k&gt;</em> solutions for
+each problem. If <em style="color:blue">&lt;k&gt;</em> is a vector or list, then the ith value of <em style="color:blue">&lt;k&gt;</em>
+is used with the ith value of the genetic problem 
+(ordered alphabetically by name). The same is true of <em style="color:blue">&lt;n&gt;</em> and the 
+genetic problems. See ga-sim for an explanation of the keyword parameters.</pre>
+<h2 style="color=darkblue">solve-genetic-problem<b style="color=blue">&nbsp; &nbsp(n g-name &amp;key (gene-length-constant? t) (print-pools? nil)
+ (print-intermediate? nil) (mutation-rate nil) (k 1))</b></h2><pre>Solve a genetic problem defined by structure genetic named by <em style="color:blue">&lt;g-name&gt;</em>.
+Return the <em style="color:blue">&lt;k&gt;</em> best solutions. See ga-sim for an explanation of the 
+keyword parameters.</pre>
+<h2 style="color=darkblue">solve-genetic-problems<b style="color=blue">&nbsp; &nbsp(n names &amp;key (gene-length-constant? t) (print-pools? nil)
+ (print-intermediate? nil) (mutation-rate nil) (k 1))</b></h2><pre>Solve the list of genetic problems introduced by defgenetic named by <em style="color:blue">&lt;names&gt;</em>.
+Run the simulation <em style="color:blue">&lt;n&gt;</em> times. Return the best <em style="color:blue">&lt;k&gt;</em> solutions for
+each problem. If <em style="color:blue">&lt;k&gt;</em> is a vector or list, then the ith value of <em style="color:blue">&lt;k&gt;</em>
+is used with the ith value of the genetic problem 
+(ordered alphabetically by name). The same is true of <em style="color:blue">&lt;n&gt;</em> and the 
+genetic problems. See ga-sim for an explanation of the keyword parameters.</pre></td></tr></table></body>

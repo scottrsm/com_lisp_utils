@@ -1,0 +1,101 @@
+<head><title>rsm.mpoly</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Multivariate Polynomial Arithmetic" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="multivariate, arithmetic, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.mpoly</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.2</h2>
+<h2>Overview:</h2>
+<pre>This package allows users to perform rudimentary computations with
+multivariate polynomials. The user may also change the arithmetic modulus of the
+computation to any integer greater than 1. When the modulus is a prime, the
+default is to assume that the polynomials are over the field Z_p. In this case
+any variable power X^p is equivalent to X; as such, this information is used to
+reduce polynomials powers. If this behavior is not desired one may use the
+function use-power-modulus with a null value to turn this behavior off.
+
+REQUIRES: package rsm.filter.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+poly (&amp;rest (c (&amp;rest powers))) :</b> Construct a polynomial.<b style="color:darkblue">
+lt (poly) :</b> Returns the leading term (using the current ordering) 
+            as (coeff . #(power-vector)).<b style="color:darkblue">
+lp (poly) :</b> Returns the leading power (using the current ordering) 
+            as #(power-vector).<b style="color:darkblue">
+lc (poly) :</b> Returns the leading coefficient (using the current ordering).
+<b style="color:darkblue">
++  (poly1 &amp;rest polys)  :</b> Add one or more polynomials.<b style="color:darkblue">
+-  (poly1 &amp;rest polys)  :</b> Subtract one or more polynomials.<b style="color:darkblue">
+*  (poly1 &amp;rest polys)  :</b> Multiply one or more polynomials.<b style="color:darkblue">
+^  (poly n)             :</b> Raise a polynomial to a non-negative integer power.
+<b style="color:darkblue">
+poly-p (arg)  :</b> True if argument is a polynomial.
+<b style="color:darkblue">
+mul-poly-term :</b> Multiply a polynomial by a term.<b style="color:darkblue">
+poly-scalar-mul (c poly) :</b> Multiply a polynomial by a scalar.<b style="color:darkblue">
+poly-scalar-add (c poly) :</b> Add a scalar to  a polynomial.<b style="color:darkblue">
+poly= (p1 p2)            :</b> Is polynomial p1 the same as polynomial p2?
+<b style="color:darkblue">
+set-order (lex-type) :</b> Sets the order by which terms are compared.<b style="color:darkblue">
+get-order (lex-type) :</b> Gets the order by which terms are compared.
+<b style="color:darkblue">
+set-modulus (m pm) :</b> Sets the modulus and power-modulus. If &lt;m&gt; is nil, 
+                     no modulus is used.<b style="color:darkblue">
+get-modulus ()  :</b> Gets the modulus - nil by default - and power-modulus.
+                  (That is, no modulus is used by default.)<b style="color:darkblue">
+use-power-modulus (Bool) :</b> Turn on or off the simplification x^modulus = x.<b style="color:darkblue">
+report-state () :</b> Report the state of parameters that control 
+                  polynomial computation.<b style="color:darkblue">
+get-state ()    :</b> Get the state of parameters that control 
+                  polynomial computation.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">*<b style="color=blue">&nbsp; &nbsp(p1 &amp;rest ps)</b></h2><pre>Multiplies one or more polynomials (or numbers).</pre>
+<h2 style="color=darkblue">+<b style="color=blue">&nbsp; &nbsp(&amp;rest ps)</b></h2><pre>Adds one or more polynomials (or numbers). With respect to 
+mutiple arguments, the behavior is the same as the Common Lisp '+'
+function.</pre>
+<h2 style="color=darkblue">-<b style="color=blue">&nbsp; &nbsp(p1 &amp;rest ps)</b></h2><pre>Subtracts one or more polynomials (or numbers). With respect to 
+multiple arguments, the behavior is the same as the Common Lisp '-' function.</pre>
+<h2 style="color=darkblue">^<b style="color=blue">&nbsp; &nbsp(poly n)</b></h2><pre>Returns <em style="color:blue">&lt;poly&gt;</em> raised to the <em style="color:blue">&lt;n&gt;</em>th power.</pre>
+<h2 style="color=darkblue">get-modulus<b style="color=blue"> ()</b></h2><pre>Get the current modulus.</pre>
+<h2 style="color=darkblue">get-order<b style="color=blue"> ()</b></h2><pre>Get the ordering type in use. Currently, there are two types:
+lex and deglex.</pre>
+<h2 style="color=darkblue">get-state<b style="color=blue"> ()</b></h2><pre>Return state information that determines how polynomial 
+calculations are computed.</pre>
+<h2 style="color=darkblue">lc<b style="color=blue">&nbsp; &nbsp(poly)</b></h2><pre>Return the leading coefficient of <em style="color:blue">&lt;poly&gt;</em> (using the current ordering).</pre>
+<h2 style="color=darkblue">lp<b style="color=blue">&nbsp; &nbsp(poly)</b></h2><pre>Return the leading power of <em style="color:blue">&lt;poly&gt;</em> (using the current ordering)
+in the form #(power-vector).</pre>
+<h2 style="color=darkblue">lt<b style="color=blue">&nbsp; &nbsp(poly)</b></h2><pre>Return the leading term of <em style="color:blue">&lt;poly&gt;</em> (using the current ordering)
+in the form (coeff . #(power-vector)).</pre>
+<h2 style="color=darkblue">make-zero-poly<b style="color=blue">&nbsp; &nbsp(f)</b></h2><pre>Make the zero polynomial of the same type as <em style="color:blue">&lt;f&gt;</em>.</pre>
+<h2 style="color=darkblue">mul-poly-term<b style="color=blue">&nbsp; &nbsp(poly term)</b></h2><pre>Multiply polynomial <em style="color:blue">&lt;poly&gt;</em> by term, <em style="color:blue">&lt;term&gt;</em>.</pre>
+<h2 style="color=darkblue">poly<b style="color=blue">&nbsp; &nbsp(&amp;whole args &amp;rest r)</b></h2><pre>Constructor macro for polynomials.<div style="color:darkgreen">
+Example: (rsm.mpoly:poly (2 (1 3)) (10 (2 1)) (4 (1 1))) </div>
+creates the polynomial 2xy^3 + 10x^2y + 4xy.</pre>
+<h2 style="color=darkblue">poly-p<b style="color=blue">&nbsp; &nbsp(excl::object)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">poly-scalar-add<b style="color=blue">&nbsp; &nbsp(c poly)</b></h2><pre>Add a scalar to a polynomial.</pre>
+<h2 style="color=darkblue">poly-scalar-mul<b style="color=blue">&nbsp; &nbsp(c poly)</b></h2><pre>Multiply a polynomial by a scalar.</pre>
+<h2 style="color=darkblue">poly=<b style="color=blue">&nbsp; &nbsp(p1 p2)</b></h2><pre>Predicate that checks to see if two polynomils are the same under the 
+current modulus.</pre>
+<h2 style="color=darkblue">report-state<b style="color=blue"> ()</b></h2><pre>Write state information that determines how polynomial 
+calculations are computed.</pre>
+<h2 style="color=darkblue">set-modulus<b style="color=blue">&nbsp; &nbsp(mod &amp;key (field? nil))</b></h2><pre>Set the modulus power-modulus.</pre>
+<h2 style="color=darkblue">set-order<b style="color=blue">&nbsp; &nbsp(order)</b></h2><pre>Set the ordering used for computation and printing.
+Returns the previous ordering type. Currently, there are two types:
+lex-order and deglex-order.<div style="color:darkgreen">
+Example: (rsm.mpoly:set-order deglex) </div>
+         lex</pre>
+<h2 style="color=darkblue">term<b style="color=blue">&nbsp; &nbsp(c (&amp;rest powers))</b></h2><pre>Macro to construct a term.<div style="color:darkgreen">
+Example: (rsm.mpoly:term (2 (1 3))) </div>
+creates the term 2xy^3.</pre>
+<h2 style="color=darkblue">use-power-modulus<b style="color=blue">&nbsp; &nbsp(val)</b></h2><pre>A non nil value sets the "power-modulus" to true; false otherwise.
+Returns the previous value of the "power modulus". If the power modulus 
+is true, the simplification X^mod = X is used if there is a non-null 
+modulus, mod.</pre></td></tr></table></body>

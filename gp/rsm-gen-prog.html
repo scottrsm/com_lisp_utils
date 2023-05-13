@@ -1,0 +1,64 @@
+<head><title>rsm.gen-prog</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Genetic Programming" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="genetic, programming, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.gen-prog</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>A package for doing genetic programming.
+
+<b style="color:darkblue">Export Summary:</b>  
+<b style="color:darkblue">
+make-gen-params:</b> Make a structure that has genetic programming parameters.
+<b style="color:darkblue">
+make-func-from-pairs:</b> Makes a function from a vector of pairs.
+<b style="color:darkblue">
+make-initial-population:</b> Make the initial population.
+<b style="color:darkblue">
+form-next-generation:</b> Form the next generation.
+<b style="color:darkblue">
+get-program-cache:</b> Get the program cache of best k programs.
+<b style="color:darkblue">
+get-best-programs:</b> Get the very best programs.
+<b style="color:darkblue">
+examine-population:</b> Examine the current generation.
+
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">examine-population<b style="color=blue">&nbsp; &nbsp(gen-params)</b></h2><pre>Print the current gene population.</pre>
+<h2 style="color=darkblue">form-next-generation<b style="color=blue">&nbsp; &nbsp(gen-number total-fitness gen-params)</b></h2><pre>Form the next generation from the current one (contained in <em style="color:blue">&lt;gen-params&gt;</em>).
+Use the fitness of the present population and the total-fitness to select 
+randomly (with replacement) the next generation. The parameter, 
+cache-list-limit sets a limit on the length of lists in the program cache
+which is stored in <em style="color:blue">&lt;gen-params&gt;</em>. If nil, there will be no restrictions on 
+the length of any list in the program cache.</pre>
+<h2 style="color=darkblue">get-best-programs<b style="color=blue">&nbsp; &nbsp(gen-params)</b></h2><pre>Get a list of the best program trees.</pre>
+<h2 style="color=darkblue">get-program-cache<b style="color=blue">&nbsp; &nbsp(gen-params)</b></h2><pre>Get the best lists of program trees.</pre>
+<h2 style="color=darkblue">make-func-from-pairs<b style="color=blue">&nbsp; &nbsp(func-sym func-pairs-vec &amp;key dotted-p)</b></h2><pre>Makes a step function attached to the symbol, <em style="color:blue">&lt;func-sym&gt;</em>, that has 
+values the step beginnings and step values defined by <em style="color:blue">&lt;func-pairs-vec&gt;</em>. 
+If dotted-p is true the pairs in <em style="color:blue">&lt;func-pairs-vec&gt;</em> are dotted pairs.<b style="color:red">
+Note: </b> It is assumed that the start values of the steps in <em style="color:blue">&lt;func-pairs-vec&gt;</em> are 
+      in increasing order.</pre>
+<h2 style="color=darkblue">make-gen-params<b style="color=blue">&nbsp; &nbsp(population-size vars terminals init-terminals funcs funcs-vars correct-func
+ func-conversions init-terminal-conversions distance-metric sum-norm points
+ &amp;key (cross-over-func-prob *cross-over-func-prob*)
+ (cross-over-prob *cross-over-prob*)
+ (cross-over-attempts *cross-over-attempts*)
+ (max-initial-tree-depth *max-initial-tree-depth*)
+ (max-tree-depth *max-tree-depth*) (retry-count *retry-count*)
+ (raw-fitness-increasing *raw-fitness-increasing*)
+ (raw-fitness-bound *raw-fitness-bound*) (cache-list-limit *cache-list-limit*)
+ (obj-cache-size *obj-cache-size*))</b></h2><pre>A constructor for structure genetic-params.</pre>
+<h2 style="color=darkblue">make-initial-population<b style="color=blue">&nbsp; &nbsp(gen-params)</b></h2><pre>From <em style="color:blue">&lt;gen-params&gt;</em> get <em style="color:blue">&lt;program-ary&gt;</em> and <em style="color:blue">&lt;population-size&gt;</em> and then
+fill in the array <em style="color:blue">&lt;program-ary&gt;</em> of size <em style="color:blue">&lt;population-size&gt;</em> with elements 
+of the type program-tree. The keyword, cache-list-limit, limits the 
+maximum length of a list in the cache of programs (stored in <em style="color:blue">&lt;gen-params&gt;</em>) 
+to its value. If cache-list-limit is nil, then there will be no 
+maximum length to any list in the cache of programs.
+Return the total fitness of the population.</pre></td></tr></table></body>

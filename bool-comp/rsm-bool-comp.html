@@ -1,0 +1,267 @@
+<head><title>rsm.bool-comp</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Boolean Function Equivalence" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="boolean, comparision, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.bool-comp</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.1</h2>
+<h2>Overview:</h2>
+<pre>DESCRIPTION: This file contains a Boolean solver that allows a user 
+              to find a non-zero value (if it exists) of 
+              a Boolean expression of the form f(x1,x2,...,xn). 
+              Such a solver can be used, for instance, to 
+              determine if two Boolean functions, f and g, are the 
+              same by seeking to find a solution 
+              of the Boolean function f ^ g (that is f XOR g). 
+              The solver and related functions use a representation of 
+              the function f as a "term list" which represents a Boolean
+              function as an XOR sum of terms, where each term is a 
+              vector which represents the AND'ing of
+              variables, their negation, or 1. This representation is a 
+              non-canonical one which, like a Boolean
+              expression, can be a relatively compact way to represent a 
+              Boolean function. However, without 
+              a canonical form, we must use simplification to compare 
+              a given function with the zero function.
+
+              WORKING WITH THE REPRESENTATION: 
+                Example of the representation: The "term list" 
+                '(#(1 0 2) #(0 1 2)) represents the Boolean 
+                function (X1 * X2') ^ (X1' * X2). We use the 
+                following notation: "*" means AND ; "^" means XOR; 
+                "'" appended to a variable, X, means NOT X; ~ &lt;expression&gt; 
+                means NOT &lt;expression&gt;; and "+" means OR.
+                The expression is interpreted by XORing each Boolean 
+                expression derived from each term. Each term is decoded 
+                by doing the following: For each index in the array 
+                (1 based index), examine the number at that index. 
+                If the number is 1 take the corresponding variable and 
+                AND it with with the result so far. If the number is 0 
+                take the corresponding variable, negate it, and AND it 
+                with the result so far.
+                Finally, if the number is 2, AND 1 with the result so far. 
+                Example: So, for the term #(1 0 2), take the first 
+                element of the array (at index 1) which is 1.
+                Take the variable X1 and AND it with the next. 
+                The next is X2 negated since the second element of  
+                the array is 0 and we have X1 * X2'. Finally, with an 
+                index of 3, the value of the array is 2 which means we 
+                AND X1 * X2' with 1. The result is: X1 * X2'.
+
+                Example: The "term list" '(#(1 0 2) #(0 1 2)) is 
+                interpreted as "X1 * X2' ^ X1' * X2".
+                NOTE: Boolean expressions here and in the code are 
+                      interpreted with the following choice of 
+                      operator symbols and their precedence:
+                      NOT -&gt; ~ or ', AND -&gt; *, XOR -&gt; ^, OR -&gt; +.
+                Therefore, X1 + X2*X3 means to AND X2 with X3 and 
+                then OR that with X1.
+              ANOTHER INTERPRETATION OF THE REPRESENTATION: 
+                Boolean functions of n variables can be represented by 
+                bit-strings of length 2^n.
+                This representation is canonical but grows exponentially. 
+                However, it is possible to 
+                compactly represent certain Boolean functions as a 
+                "tensor product" of binary pairs; and,
+                represent an arbitrary Boolean function as an XOR 
+                sum of such terms.
+                One can translate a "term" in a "term list" to a 
+                bit-string that represents the Boolean function 
+                of that "term". This can be done as follows: 
+                Interpret each of the 0, 1, 2 in the term array as 
+                K, H, E respectively, where K = #(1 0), H = #(0 1), 
+                E = #(1 1). Now take the tensor product of 
+                each of these K, H, and E's. Example: #(1 0 2) 
+                translates to H x K x E (here x means tensor product).
+                That is, #(0 1) x #(1 0) x #(1 1) = #(0 1 0 0) x #(1 1) 
+                = #(0 1 0 0 0 1 0 0).
+                #(0 1 0 0 0 1 0 0) is the bit string representation of 
+                the Boolean function of three variables 
+                represented by #(1 0 2) namely, X1*X2'. 
+                The bit-string is actually a listing of the values of the 
+                truth table of the Boolean function X1*X2':
+                 X1 X2 X3 -&gt; X1*X2'
+                 0  0  0     0
+                 1  0  0     1
+                 0  1  0     0
+                 1  1  0     0
+                 0  0  1     0
+                 1  0  1     1
+                 0  1  1     0
+                 1  1  1     0
+                Notice that the values under X1*X2' in the table read top 
+                to bottom are the same as the array #(0 1 0 0 0 1 0 0).
+                In fact, one can show that the functions X1, X2, X3 
+                can be represented as H X E x E, E x H x E, and E X E X H 
+                respectively. This view of Boolean functions as bit-strings
+                motivated the algorithms below.
+                NOTE: When there is a small number of variables, 
+                      a bit-string representation is used rather than the
+                      "tensor product" term list representation. In the 
+                      functions below the bit-string representation is 
+                      used if a Boolean function uses 12 or fewer variables.
+ 
+              SYMMETRY: If a Boolean function of n variables is completely 
+                        symmetric, it can be determined 
+                        to be the zero function in at most n+1 evaluations. 
+                        The solver function is-function-non-zero? takes 
+                        advantage of symmetry information, as it finds it,
+                        to simplify the complexity of the representation.
+
+<b style="color:darkblue">Export Summary:</b>
+
+
+              is-function-non-zero? is a low-level function that is used 
+              to find a non-zero value of a Boolean function.
+              It is low-level in the sense that it takes as input a 
+              "term list" (defined above).
+              The return value is NIL, if the function *is* the 
+              zero function; otherwise, it returns a vector of zero's 
+              and one's that indicate the values that each variable should
+              take in order to get a non-zero value from the 
+              Boolean function.<b style="color:darkblue">
+              Example:</b> (is-function-non-zero? 
+                         '(#(0 1 0 2) #(0 1 2 0) #(0 1 0 1) #(0 1 1 0)) 4)
+                       nil
+              This means this that the function represented by the xoring of 
+              terms #(0 1 0 2), #(0 1 2 0), #(0 1 0 1), and #(0 1 1 0)
+              is the zero function.
+<b style="color:darkblue">
+              Example:</b> (is-function-non-zero? 
+                        '(#(2 2 1 2 1 0 1 2 0 1 1 1) 
+                          #(2 2 1 0 1 1 0 1 2 2 1 1) 
+                          #(2 2 2 2 1 1 0 2 1 1 1 2)) 12)
+                       #(1 1 1 1 1 1 0 1 1 1 1 1)
+              This means that setting each variable to the successive 
+              values in the array #(1 1 1 1 1 1 0 1 1 1 1 1) and 
+              evaluating the Boolean function represented by the term 
+              list will yield 1.
+
+              bool-solve is higher level version of is-function-non-zero? 
+              but takes as input an ordinary Boolean expression.
+<b style="color:darkblue">
+              Example:</b> (bool-solve "X1 + X2*X3")
+               #(0 1 1)
+              This means that one way to get a non-zero value of the 
+              expression "X1 + X2*X3" is to 
+              evaluate this function with X1=0, X2=1, and X3=1.
+<b style="color:darkblue">
+              Example:</b> (bool-solve "(X1' * X2 + X1 * X2') ^ 
+                                     ( (X1 + X2) * ( X1' + X2') )")
+               NIL
+              This means that there is no input that will yield a non-zero
+              value; that is, the expression is really the zero function.
+
+              bool-solve-from-file is like bool-solve but reads a 
+              Boolean expression from a file.
+<b style="color:darkblue">
+              Example:</b> (bool-solve-from-file file-name)
+                If file-name is a file with contents X1 + X2*X3, this 
+                function will return  #(0 1 1)
+
+              rpn-eqn-tree-&gt;term-list takes an RPN Boolean expression 
+              (a tree) and converts it to a tree of "terms".
+<b style="color:darkblue">
+              Example:</b> (rpn-eqn-tree-&gt;term-list '(+ x1 x2 (* x3 x4) x5) 5)
+               (+ #(1 2 2 2 2) #(2 1 2 2 2) (* #(2 2 1 2 2) 
+                  #(2 2 2 1 2)) #(2 2 2 2 1))
+
+              convert-tree-&gt;xor takes an RPN Boolean
+              equation (a tree) of "terms" and converts it to an 
+              XOR "term list". 
+<b style="color:darkblue">
+              Example:</b> (convert-tree-&gt;xor 
+                '(+ #(1 1 2) #(0 2 1) (* #(1 2 1) #(2 0 2))) 3)
+               (#(0 2 1) #(1 1 2) #(1 0 1)
+
+              formula-&gt;rep takes a Boolean expression and converts it 
+              to a "term list". The user need not worry about inserting 
+              white space between operators or variables.
+              The function will also determine the number of variables.<b style="color:darkblue">
+              Example:</b> (formula-&gt;rep "X1 + X3")
+              (#(1 2 2) #(0 2 1))
+
+              rep-from-file reads a Boolean expression from a file and 
+              converts it to a "term list".
+              The user need not worry about inserting white space 
+              between operators or variables. 
+              The function will also determine the number of variables. 
+
+              list-&gt;eqn takes a "term list" and converts it to a 
+              Boolean expression.
+<b style="color:darkblue">
+              Example:</b> (list-&gt;eqn '(#(1 0 2) #(0 1 2)))
+               X1*X2' ^ X1'*X2 
+<b style="color:darkblue">
+          NOTE:</b> In the code below we use the word "orthogonal". 
+                By the phrase "term t1 is orthogonal to term t2" 
+                we mean that t1 ANDed with t2 is zero. 
+                In bit-string terms, this means that the "dot-product"
+                of the two bit-strings is zero.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">bool-solve<b style="color=blue">&nbsp; &nbsp(eqn)</b></h2><pre>Find an input value such that equation, <em style="color:blue">&lt;eqn&gt;</em>, yields the value 1.<div style="color:darkgreen">
+Example: (rsm.bool-comp:bool-solve "X1 + X2*X3") </div>
+         #(0 1 1)
+That is, if X1=0, X2=1, and X3=1, then "X1 + X2*X3" is 1.
+Assumes that a single variable name is used - in the above case, x.</pre>
+<h2 style="color=darkblue">bool-solve-from-file<b style="color=blue">&nbsp; &nbsp(file-name)</b></h2><pre>Find an input value such that the equation found in the file, <em style="color:blue">&lt;file-name&gt;</em>,
+yeilds the value 1.<div style="color:darkgreen">
+Example: (rsm.bool-comp:bool-solve-from-file "formula.lsp") </div>
+  #(0 0 0 0 0)
+In this case, if formula.lsp contains the text
+  (x1 + x2 + x3 + x4 + x5) ^ 
+   (x1' + x2' + x3' + x4')
+then letting x1=x2=x3=x4=0 in the formula represented by the text yields 1. 
+Assumes that a single variable name is used - in the above case, x.</pre>
+<h2 style="color=darkblue">convert-tree-&gt;xor<b style="color=blue">&nbsp; &nbsp(tree size)</b></h2><pre>Convert an RPN tree of logical terms (representing a function) to 
+an XOR term list.<div style="color:darkgreen">
+Example: (rsm.bool-comp:convert-tree->xor '(#.XOR (#.XOR #(2 1) #(1 2))  </div>
+                                                  (#.XOR #(1 2) #(1 1))) 2)
+         (#(2 1) #(1 2) #(1 2) #(1 1))<div style="color:darkgreen">
+Example: (rsm.bool-comp:convert-tree->xor '(#.OR (#.XOR #(2 1) #(1 2))  </div>
+                                                 (#.XOR #(1 2) #(1 1))) 2)
+         (#(2 1) #(1 2))</pre>
+<h2 style="color=darkblue">formula-&gt;rep<b style="color=blue">&nbsp; &nbsp(formula)</b></h2><pre>Convert an algebraic expression, <em style="color:blue">&lt;formula&gt;</em>, into the boolean tensor 
+representation.<div style="color:darkgreen">
+Example: (rsm.bool-comp:formula->rep "X1 + X3") </div>
+         (#(1 2 2) #(0 2 1))
+Assumes that a single variable name is used - in the above case, x.</pre>
+<h2 style="color=darkblue">is-function-non-zero?<b style="color=blue">&nbsp; &nbsp(tl size)</b></h2><pre>Predicate: Determines if the function represented by the "term list", <em style="color:blue">&lt;tl&gt;</em>,
+is non-zero. Returns a value that generates a non-zero result if true; 
+otherwise, this function is the zero function and nil is returned.
+Assumes that each member of <em style="color:blue">&lt;tl&gt;</em> has size <em style="color:blue">&lt;size&gt;</em>.
+STRATEGY: - Try to find a non-zero value as though the function, 
+             <em style="color:blue">&lt;tl&gt;</em>, is a symmetric function.
+             This involves n+1 (n - the number of variables) evaluations.
+           - If this fails then if there are 12 or fewer variables use 
+             the bit-string representation to find the answer.
+          OTHERWISE: 
+           - simplify <em style="color:blue">&lt;tl&gt;</em>.
+           - Try to show symmetry. If <em style="color:blue">&lt;tl&gt;</em> is completely symmetric, 
+             then since we've already tested for a non-zero value for 
+             symmetric functions, <em style="color:blue">&lt;tl&gt;</em> must be the zero function. Otherwise,
+             find the first index i (and projection) where swapping the 
+             variable x1 with xi changes the function, <em style="color:blue">&lt;tl&gt;</em>; that is, we at 
+             least can't easily show that it leaves <em style="color:blue">&lt;tl&gt;</em> the same.
+           - In the last step we get back (in the case of non-symmetry) 
+             a sym-diff flipped version of <em style="color:blue">&lt;tl&gt;</em>.
+             Two cases: the flipped version is the same as <em style="color:blue">&lt;tl&gt;</em>, or it 
+             is different. In either case, we recurse and move to the next 
+             index which is not symmetric - or finish.</pre>
+<h2 style="color=darkblue">list-&gt;eqn<b style="color=blue">&nbsp; &nbsp(tl)</b></h2><pre>Prints a familiar algebraic representation of an XOR term list.<div style="color:darkgreen">
+Example: (rsm.bool-comp:list->eqn '(#(1 2 0) #(1 1 1))) </div>
+          X1*X3' ^ X1*X2*X3</pre>
+<h2 style="color=darkblue">rep-from-file<b style="color=blue">&nbsp; &nbsp(file-name)</b></h2><pre>Convert an algebraic expression contained in file, <em style="color:blue">&lt;file-name&gt;</em>, w
+into the boolean tensor representation.<div style="color:darkgreen">
+Example: (rsm.bool-comp:rep-from-file "formula.lsp") </div>
+         (#(1 2 2) #(0 2 1))
+The example assumes that the file formula.lsp contains the text: X1 + X3.
+This function assumes that a single variable name is used - in the 
+above case, x.</pre></td></tr></table></body>

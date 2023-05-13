@@ -1,0 +1,91 @@
+<head><title>rsm.rsa</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="RSA Encryption Algorithm" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="RSA, encryption, algorithm, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.rsa</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.3</h2>
+<h2>Overview:</h2>
+<pre>This package provides RSA encryption functions.
+
+REQUIRES: package rsm.mod.
+
+Some of the functions use an rsa-keys structure that contains an RSA
+encryption/decryption pair in the form of two slots. One slot contains the
+encrypt-key structure and the other the decrypt-key structure. There is also a
+key ring to store RSA encryption/decryption keys (rsa-keys structure).
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+decrypt:</b> RSA decryption of a message.<b style="color:darkblue">
+encrypt:</b> RSA encryption of a message.
+<b style="color:darkblue">
+get-next-prob-prime:</b> Get the next probable prime from a starting position.<b style="color:darkblue">
+get-rand-rel-prime :</b> Generate a random number that is relatively prime.<b style="color:darkblue">
+generate-keys      :</b> Forms the encryption and decryption keys given primes.<b style="color:darkblue">
+generate-prime-pair:</b> Generates two primes of a given length.<b style="color:darkblue">
+prob-prime-p       :</b> Return true if a number is very likely to be prime.
+<b style="color:darkblue">
+clear-key-ring :</b> Clear the key ring.<b style="color:darkblue">
+remove-key-from-key-ring:</b> Remove a key from the key ring.<b style="color:darkblue">
+key-&gt;key-ring  :</b> Associate a name with an rsa-keys structure - add to key ring.<b style="color:darkblue">
+key-ring-&gt;file :</b> Write the key ring out to a file.<b style="color:darkblue">
+file-&gt;key-ring :</b> Load a key ring from a file.<b style="color:darkblue">
+make-new-keys  :</b> Makes a new RSA encryption/decryption pair(rsa-keys structure).<b style="color:darkblue">
+find-keys      :</b> Return an rsa-keys structure given its name.
+<b style="color:darkblue">
+find-encryption-key:</b> Find the encryption key associated with a name.<b style="color:darkblue">
+find-decryption-key:</b> Find the decryption key associated with a name.</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">clear-key-ring<b style="color=blue"> ()</b></h2><pre>Clear the key ring.</pre>
+<h2 style="color=darkblue">decrypt<b style="color=blue">&nbsp; &nbsp(d-key encrypt-list)</b></h2><pre>Decrypt the list of numbers <em style="color:blue">&lt;encrypt-list&gt;</em> into a string. The key, <em style="color:blue">&lt;d-key&gt;</em>,
+contains the numbers n and d which represent the RSA key decryption pair. It
+also contains an Euler Phi number that is the value of the Euler Phi function 
+of n.</pre>
+<h2 style="color=darkblue">encrypt<b style="color=blue">&nbsp; &nbsp(e-key text)</b></h2><pre>Encrypt <em style="color:blue">&lt;text&gt;</em> into a list of numbers. Each number is formed by using the RSA
+algorithm on a block of text. The key, <em style="color:blue">&lt;e-key&gt;</em>, contains the numbers n and e
+which represent the RSA key encryption pair as well as the block size of the
+text to encrypt.</pre>
+<h2 style="color=darkblue">file-&gt;key-ring<b style="color=blue">&nbsp; &nbsp(file-name)</b></h2><pre>Load rsa-keys structures from file, <em style="color:blue">&lt;file-name&gt;</em>, and place on the key ring.</pre>
+<h2 style="color=darkblue">find-decryption-key<b style="color=blue">&nbsp; &nbsp(name)</b></h2><pre>Get the rsa encryption structure associated with name, <em style="color:blue">&lt;name&gt;</em>.</pre>
+<h2 style="color=darkblue">find-encryption-key<b style="color=blue">&nbsp; &nbsp(name)</b></h2><pre>Get the rsa encryption structure associated with name, <em style="color:blue">&lt;name&gt;</em>.</pre>
+<h2 style="color=darkblue">find-keys<b style="color=blue">&nbsp; &nbsp(name)</b></h2><pre>Get an rsa-keys structure associated with name, <em style="color:blue">&lt;name&gt;</em>. This structure 
+contains the encryption and decryption keys.</pre>
+<h2 style="color=darkblue">generate-keys<b style="color=blue">&nbsp; &nbsp(p q name &amp;key e)</b></h2><pre>Generate an rsa-key structure given the two primes, <em style="color:blue">&lt;p&gt;</em> and <em style="color:blue">&lt;q&gt;</em>.</pre>
+<h2 style="color=darkblue">generate-prime-pair<b style="color=blue">&nbsp; &nbsp(len1 len2 &amp;key (trials 100))</b></h2><pre>Generate two probable primes p,q, of lengths <em style="color:blue">&lt;len1&gt;</em> and <em style="color:blue">&lt;len2&gt;</em>. If used for
+RSA encryption, the lengths should differ by a wide margin. This function will
+choose p and q so that gcd(p-1, q-1) is small. Use a larger value for <em style="color:blue">&lt;trials&gt;</em>
+for more probable primes. It should also (but does not) ensure 
+that (p-1) and (q-1) both have large prime factors. This function can be  
+time consuming. This function takes 15-20 seconds on a Pentium IV 1.8 GHZ 
+when <em style="color:blue">&lt;len1&gt;</em> and <em style="color:blue">&lt;len2&gt;</em> are roughly 100. However, finding primes of lengths 
+150 and 170 takes 45 seconds, while finding primes of lengths 250 and 270 
+takes ever 3 minutes.</pre>
+<h2 style="color=darkblue">get-next-prob-prime<b style="color=blue">&nbsp; &nbsp(p-start &amp;key (trials 100))</b></h2><pre>Find a probable prime starting at <em style="color:blue">&lt;p-start&gt;</em> (p-start assumed odd) and
+incrementing by 2 until a probable prime is found.  Test each value
+using <em style="color:blue">&lt;trials&gt;</em> number of random values with the function prob-prime-p.</pre>
+<h2 style="color=darkblue">get-rand-rel-prime<b style="color=blue">&nbsp; &nbsp(n)</b></h2><pre>Generate a random number relatively prime to <em style="color:blue">&lt;n&gt;</em> larger than a third of 
+<em style="color:blue">&lt;n&gt;</em>, but less than a half of <em style="color:blue">&lt;n&gt;</em>.</pre>
+<h2 style="color=darkblue">key-&gt;key-ring<b style="color=blue">&nbsp; &nbsp(rsa-keys)</b></h2><pre>Put key, <em style="color:blue">&lt;rsa-keys&gt;</em> on the key ring. That is, store (associate) the 
+name of the rsa-keys structure, <em style="color:blue">&lt;rsa-keys&gt;</em>, with its name.</pre>
+<h2 style="color=darkblue">key-ring-&gt;file<b style="color=blue">&nbsp; &nbsp(file-name)</b></h2><pre>Write out the key ring of rsa-keys structures to the file, <em style="color:blue">&lt;file-name&gt;</em>.</pre>
+<h2 style="color=darkblue">make-new-keys<b style="color=blue">&nbsp; &nbsp(len1 len2 name &amp;key (trials 100))</b></h2><pre>Make new RSA encryption/decryption pair returned as an rsa-keys structure.
+The probable primes used will be randomly generated (use a larger value of
+<em style="color:blue">&lt;trials&gt;</em> for more confidence in the primes) and have digit lengths of <em style="color:blue">&lt;len1&gt;</em> and
+<em style="color:blue">&lt;len2&gt;</em> respectively. This function can be time consuming. 
+This function takes 15-20 seconds on a Pentium IV 1.8 GHZ when <em style="color:blue">&lt;len1&gt;</em> and 
+<em style="color:blue">&lt;len2&gt;</em> are roughly 100. However, finding primes of lengths 
+150 and 170 takes 45 seconds, while finding primes of lengths 250 and 270 
+takes ever 3 minutes.</pre>
+<h2 style="color=darkblue">prob-prime-p<b style="color=blue">&nbsp; &nbsp(p &amp;key (trials 100))</b></h2><pre>Use Fermat's little theorem: a^(p-1) = 1 mod p if p is prime. 
+Raise <em style="color:blue">&lt;trials&gt;</em> random values to the (p-1) power and check that it is 1 mod <em style="color:blue">&lt;p&gt;</em>. 
+If this is true of all values, then <em style="color:blue">&lt;p&gt;</em> is likely prime. The probability 
+increases when the number of trials, <em style="color:blue">&lt;trials&gt;</em>, is larger.</pre>
+<h2 style="color=darkblue">remove-key-from-key-ring<b style="color=blue">&nbsp; &nbsp(key-name)</b></h2><pre>Remove the key named, <em style="color:blue">&lt;key-name&gt;</em>, from the key-ring.</pre>
+<h2 style="color=darkblue">rsa-decrypt-key<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">rsa-encrypt-key<b style="color=blue">&nbsp; &nbsp(struct)</b></h2><pre>nil</pre></td></tr></table></body>

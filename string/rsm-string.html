@@ -1,0 +1,94 @@
+<head><title>rsm.string</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="String Utilities" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="string, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.string</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.1</h2>
+<h2>Overview:</h2>
+<pre>This package provides string manipulation functions.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+contains:</b> Returns all strings in a list that contain any strings in a list of 
+          string fragments. <b style="color:darkblue">
+does-not-contain:</b> Returns all strings in a list that DO NOT contain 
+                  any strings in a list of string fragments.<b style="color:darkblue">
+file-&gt;string:</b>   Reads a file returning a string of its contents.<b style="color:darkblue">
+file-&gt;number-list:</b> Returns a list of numbers read from a text file.<b style="color:darkblue">
+file-&gt;number-table:</b> Returns a list of a list of numbers after reading a file.<b style="color:darkblue">
+file-&gt;string-list:</b> Returns a list of strings read from a text file.<b style="color:darkblue">
+file-&gt;string-table:</b> Returns a list of a list of strings after reading a file.<b style="color:darkblue">
+fluff-string:</b> Return a new string that wraps a character
+              around every character in the supplied string.<b style="color:darkblue">
+join:</b> Concatenate the strings in a list returning a new string.<b style="color:darkblue">
+list-&gt;file:</b> Write a list out to a file.<b style="color:darkblue">
+number-list-&gt;file:</b> Write a list of numbers (one per line) to a file.<b style="color:darkblue">
+split:</b> Split a string into a list of strings.<b style="color:darkblue">
+string-&gt;file:</b> Writes a string to a file.<b style="color:darkblue">
+string-&gt;number:</b> Convert a string representing a number to a number.</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">contains<b style="color=blue">&nbsp; &nbsp(str-list elem-list &amp;key (contain-meaning #'some))</b></h2><pre>Returns all strings in <em style="color:blue">&lt;str-list&gt;</em> that contain strings in <em style="color:blue">&lt;elem-list&gt;</em>; where
+the meaning of contains is provided in the function <em style="color:blue">&lt;contain-meaning&gt;</em>.
+<em style="color:blue">&lt;contain-meaning&gt;</em> must take a function and a list as an argument.<div style="color:darkgreen">
+Example: (rsm.string:contains '("abc" "def" "ghi") '("bc" "gh"))  </div>
+         ("abc" "ghi")</pre>
+<h2 style="color=darkblue">does-not-contain<b style="color=blue">&nbsp; &nbsp(str-list str-elems &amp;key (unique nil))</b></h2><pre>Return a list of strings from the string list, <em style="color:blue">&lt;str-list&gt;</em>, that do not
+contain any of the strings from the list of strings <em style="color:blue">&lt;str-elems.&gt;</em> If unique is
+non nil, then the resulting list will remove duplicates. In any event, the
+order of the list may change.<div style="color:darkgreen">
+Example: (rsm.string:does-not-contain '("abc" "def" "ghi") '("ab" "gh")) </div>
+         ("def")</pre>
+<h2 style="color=darkblue">file-&gt;number-list<b style="color=blue">&nbsp; &nbsp(file-name &amp;key (delims &quot; &quot;) (missing-value-marker nil))</b></h2><pre>Takes a file name and a key word of delimiters and returns a list of
+strings that are delimited by any character in <em style="color:blue">&lt;delims&gt;</em>. If 
+<em style="color:blue">&lt;missing-value-marker&gt;</em> is non nil, then <em style="color:blue">&lt;missing-value-marker&gt;</em> will be used
+for missing values.</pre>
+<h2 style="color=darkblue">file-&gt;number-table<b style="color=blue">&nbsp; &nbsp(file-name &amp;key (delims &quot; &quot;) (missing-value-marker nil) (header nil))</b></h2><pre>Takes a file name and a a key word of delimiters and returns a table - 
+a list of lists of numbers. The rows are the lines of the file; within 
+each row, the nth column element is the nth (non-null) number. If 
+<em style="color:blue">&lt;missing-value-marker&gt;</em> is non nil, then <em style="color:blue">&lt;missing-value-marker&gt;</em> will be used
+for missing values. If <em style="color:blue">&lt;header&gt;</em> is non-nil and a number, the first <em style="color:blue">&lt;header&gt;</em>
+lines will be discarded. Otherwise, if <em style="color:blue">&lt;header&gt;</em> is non-nil, then the first
+line will be discarded.</pre>
+<h2 style="color=darkblue">file-&gt;string<b style="color=blue">&nbsp; &nbsp(file-name)</b></h2><pre>Reads file <em style="color:blue">&lt;file-name&gt;</em> returning a string of its contents.</pre>
+<h2 style="color=darkblue">file-&gt;string-list<b style="color=blue">&nbsp; &nbsp(file-name &amp;key (delims &quot; &quot;) (missing-value-marker nil))</b></h2><pre>Takes a file name and a key word of delimiters and returns a list of
+strings that are delimited by any character in <em style="color:blue">&lt;delims&gt;</em>. If 
+<em style="color:blue">&lt;missing-value-marker&gt;</em> is non nil, then <em style="color:blue">&lt;missing-value-marker&gt;</em> 
+will be used for missing values.</pre>
+<h2 style="color=darkblue">file-&gt;string-table<b style="color=blue">&nbsp; &nbsp(file-name &amp;key (delims &quot; &quot;) (missing-value-marker nil) (header nil))</b></h2><pre>Takes a file name and a key word of delimiters and returns a table - 
+a list of lists of strings. The rows are the lines of the file; within 
+each row, the nth column element is the the nth (non-null) delimited string. 
+If <em style="color:blue">&lt;missing-value-marker&gt;</em> is non nil, then <em style="color:blue">&lt;missing-value-marker&gt;</em> will be used
+for missing values. If <em style="color:blue">&lt;header&gt;</em> is non-nil and a number, the first <em style="color:blue">&lt;header&gt;</em>
+lines will be discarded. Otherwise, if <em style="color:blue">&lt;header&gt;</em> is non-nil, then the first
+line will be discarded.</pre>
+<h2 style="color=darkblue">fluff-string<b style="color=blue">&nbsp; &nbsp(str about-string &amp;key (fluff-char #\Space))</b></h2><pre>Return a new string that wraps the character <em style="color:blue">&lt;fluff-char&gt;</em> around every
+character in the string <em style="color:blue">&lt;about-string&gt;</em>.<div style="color:darkgreen">
+Example: (rsm.string:fluff-string "123+345+567" "+" :fluff-string #Space ) </div>
+          "123 + 345 + 567"</pre>
+<h2 style="color=darkblue">join<b style="color=blue">&nbsp; &nbsp(str-list &amp;key (join-string nil))</b></h2><pre>Returns a new string formed by joining all the strings in <em style="color:blue">&lt;str-list&gt;</em>. 
+If <em style="color:blue">&lt;join-string&gt;</em> is non-nil, it is used as a joining string between 
+elements of the list.<div style="color:darkgreen">
+Example: (rsm.string:join '("abc" "def" "ghi") :join-string "_") </div>
+         "abc_def_ghi"</pre>
+<h2 style="color=darkblue">list-&gt;file<b style="color=blue">&nbsp; &nbsp(list file-name)</b></h2><pre>Write out a list to a file. As the list structure is intact, the list can be
+read back in with a single call to the reader.</pre>
+<h2 style="color=darkblue">number-list-&gt;file<b style="color=blue">&nbsp; &nbsp(num-list file-name)</b></h2><pre>Writes a list of numbers out to a file with one line for each number.</pre>
+<h2 style="color=darkblue">split<b style="color=blue">&nbsp; &nbsp(str &amp;key (delims &quot; &quot;) (reverse nil) (missing-value-marker nil))</b></h2><pre>Returns a list of strings formed by splitting <em style="color:blue">&lt;str&gt;</em> at any character
+contained in <em style="color:blue">&lt;delims&gt;</em>. If <em style="color:blue">&lt;missing-value-marker&gt;</em> is non-nil, then
+<em style="color:blue">&lt;missing-value-marker&gt;</em> is used when no text is found between delimiters.<div style="color:darkgreen">
+Example: (rsm.string:split "abc def ghi" :delims " ") </div>
+         ("abc" "def" "ghi")</pre>
+<h2 style="color=darkblue">string-&gt;file<b style="color=blue">&nbsp; &nbsp(string file-name)</b></h2><pre>Writes the string, <em style="color:blue">&lt;string&gt;</em>, out to the file, <em style="color:blue">&lt;file-name&gt;</em>. If the 
+file exists it will be replaced.</pre>
+<h2 style="color=darkblue">string-&gt;number<b style="color=blue">&nbsp; &nbsp(str)</b></h2><pre>Convert a string <em style="color:blue">&lt;str&gt;</em> representing a number to a number. A second value is
+returned indicating the success of the conversion.<div style="color:darkgreen">
+Example: (rsm.string:string->number "123") </div>
+          123
+          t</pre></td></tr></table></body>

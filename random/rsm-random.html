@@ -1,0 +1,32 @@
+<head><title>rsm.random</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Random Number Generator" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="random, numbers, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.random</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>This package provides a high quality random number generator.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+b-rand:</b> Produces a uniform binary random number. That is its values are 0 or 1.<b style="color:darkblue">
+u-rand:</b> Produces a uniform random number (double-float) on the interval [0,1).<b style="color:darkblue">
+i-rand:</b> Produce a random number on the interval 
+        [0, min(2^32, most-positive-fixnum)).<b style="color:darkblue">
+init  :</b> Initialize the random number generator.<b style="color:darkblue">
+set-rand:</b> Set the seed of the random number generator.(takes one arg, a fixnum).
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">b-rand<b style="color=blue">&nbsp; &nbsp(&amp;rest args)</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">i-rand<b style="color=blue"> ()</b></h2><pre>Return a uniform random number on the interval 
+[0, min(2^32, most-positive-fixnum)).</pre>
+<h2 style="color=darkblue">init<b style="color=blue"> ()</b></h2><pre>nil</pre>
+<h2 style="color=darkblue">init/current-time<b style="color=blue"> ()</b></h2><pre>Initialize the random number generator using the current time.</pre>
+<h2 style="color=darkblue">init/file-path<b style="color=blue"> ()</b></h2><pre>Initialize the random number generator using a seed from a file.</pre>
+<h2 style="color=darkblue">u-rand<b style="color=blue">&nbsp; &nbsp(&amp;rest args)</b></h2><pre>nil</pre></td></tr></table></body>

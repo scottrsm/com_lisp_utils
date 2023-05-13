@@ -1,0 +1,57 @@
+<head><title>rsm.filter</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Mapping and Filtering Functions" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="mapping, filtering, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.filter</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.1</h2>
+<h2>Overview:</h2>
+<pre>This package provides filtering and mapping functions.
+
+REQUIRES: package rsm.queue.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+filter    :</b> Filter a list based on a predicate.<b style="color:darkblue">
+flatten   :</b> Flatten a tree to a list.<b style="color:darkblue">
+linearize :</b> Flatten a tree removing duplicates.<b style="color:darkblue">
+map-tree  :</b> Map a function over the leaves of a tree.<b style="color:darkblue">
+prune-tree:</b> Prune a tree using a predicate.<b style="color:darkblue">
+tree-hom  :</b> Create a function which prunes and transforms trees.<b style="color:darkblue">
+tree-sig  :</b> Create a tree of the same structure with t in every leaf.</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">filter<b style="color=blue">&nbsp; &nbsp(ls pruner)</b></h2><pre>Return a new list formed from selecting only those elements of <em style="color:blue">&lt;list&gt;</em> that do
+not satisfy <em style="color:blue">&lt;pruner&gt;</em>.  The order of the elements is preserved.<div style="color:darkgreen">
+Example: (rsm.filter:filter '(1 2 3 4 5) #'evenp) </div>
+          (1 3 5)</pre>
+<h2 style="color=darkblue">flatten<b style="color=blue">&nbsp; &nbsp(tree)</b></h2><pre>Flattens a tree to a list.
+ Example: (rsm.filter:flatten '(1 2 (3 4 (5) 6 7) 8))
+          '(1 2 3 4 5 6 7 8)</pre>
+<h2 style="color=darkblue">linearize<b style="color=blue">&nbsp; &nbsp(tree &amp;key (from-end nil) (test #'eql))</b></h2><pre>Linearize a tree, removing duplicates (determined equal by <em style="color:blue">&lt;test&gt;</em>).  If
+from-end is non null, then duplicate entries are removed from the end rather
+than the beginning of the resulting list.<div style="color:darkgreen">
+Example: (rsm.filter:linearize '(a b (c d (e f a) d c w q b))) </div>
+          (e f a d c w q b)<div style="color:darkgreen">
+Example: (rsm.filter:linearize '(a b (c d (e f a) d c w q b)) :from-end t) </div>
+          (a b c d e f w q)</pre>
+<h2 style="color=darkblue">map-tree<b style="color=blue">&nbsp; &nbsp(tree func)</b></h2><pre>Maps the function <em style="color:blue">&lt;func&gt;</em> over the leaves of tree <em style="color:blue">&lt;tree&gt;</em>.<div style="color:darkgreen">
+Example: (rsm.filter:map-tree  '(1 2 (3 4 (5) 6 7) 8) #'1+) </div>
+         (2 3 (4 5 (6) 7 8) 9)</pre>
+<h2 style="color=darkblue">prune-tree<b style="color=blue">&nbsp; &nbsp(tree pruner)</b></h2><pre>Returns a pruned version of <em style="color:blue">&lt;tree&gt;</em> where pruned elements satisfy the
+predicate, <em style="color:blue">&lt;pruner&gt;</em>.<div style="color:darkgreen">
+Example: (rsm.filter:prune-tree '(1 2 (3 4 (5) (6 7) 4) 2) #'oddp) </div>
+         (2 (4 (6) 4) 2)</pre>
+<h2 style="color=darkblue">tree-hom<b style="color=blue">&nbsp; &nbsp(pruner transformer)</b></h2><pre>Returns a function which takes a tree and returns a pruned, transformed copy.
+The tree will be pruned by <em style="color:blue">&lt;pruner&gt;</em> at the leafs and each leaf (that remains)
+will be transformed by <em style="color:blue">&lt;transformer&gt;</em>.<div style="color:darkgreen">
+Example: (setf *prune* (rsm.filter:tree-hom #'evenp #'(lambda (x) (+ x 10)))) </div>
+         (funcall *prune* '(1 2 3 (3 4 5 (5 6 7) (7) 8 (9 10))))
+   (11 13 (13 15 (15 17) (17) (19)))</pre>
+<h2 style="color=darkblue">tree-sig<b style="color=blue">&nbsp; &nbsp(tree)</b></h2><pre>Returns the same tree as <em style="color:blue">&lt;tree&gt;</em> with the value t in every leaf.<div style="color:darkgreen">
+Example: (rsm.filter:tree-sig '(1 2 (3 4) 6) </div>
+         (t t (t t) t)</pre></td></tr></table></body>

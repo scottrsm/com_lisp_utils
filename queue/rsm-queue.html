@@ -1,0 +1,78 @@
+<head><title>rsm.queue</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Queing functions" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="queues, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.queue</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.2</h2>
+<h2>Overview:</h2>
+<pre>This package provides the usual queuing functions.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+append-queue :</b> Create a new queue which concatenates queues.<b style="color:darkblue">
+nappend-queue:</b> Similar to nconc, but for queues.<b style="color:darkblue">
+create       :</b> Create a new queue.<b style="color:darkblue">
+do-queue     :</b> Control structure for queue: Like dolist but for queues. 
+               Each element is formed by dequeuing a copy of the original queue.<b style="color:darkblue">
+do-nqueue    :</b> Control structure for queue: Like dolist but for queues. 
+               Each element is formed by dequeuing the original queue. 
+               This function is destructive.<b style="color:darkblue">
+empty-p      :</b> Is this queue empty?<b style="color:darkblue">
+enqueue      :</b> Enqueue an element onto a queue.<b style="color:darkblue">
+dequeue      :</b> Dequeue a queue (returning the dequeued element).<b style="color:darkblue">
+get-first    :</b> Get the first element of the queue. The next element to be
+               dequeued.<b style="color:darkblue">
+get-last     :</b> Get the last element of the queue. The last element to be 
+               dequeued.<b style="color:darkblue">
+nget-list    :</b> Get the list of the queue. Does NOT make a copy.<b style="color:darkblue">
+list-&gt;queue  :</b> Returns a copy of a list as a queue.<b style="color:darkblue">
+queue        :</b> A type for queues.<b style="color:darkblue">
+queue-p      :</b> Returns true if argument is a queue.<b style="color:darkblue">
+queue-&gt;list  :</b> Returns a copy of the list of the queue.<b style="color:darkblue">
+nsort-queue  :</b> Sort a queue in place.<b style="color:darkblue">
+sort-queue   :</b> Sort a copy of a queue.</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">append-queue<b style="color=blue">&nbsp; &nbsp(&amp;rest queues)</b></h2><pre>Create a new queue which appends the other queues. The original queues are
+not changed.</pre>
+<h2 style="color=darkblue">copy-queue<b style="color=blue">&nbsp; &nbsp(que)</b></h2><pre>Copy a queue.</pre>
+<h2 style="color=darkblue">create<b style="color=blue">&nbsp; &nbsp(&amp;optional obj)</b></h2><pre>Create a queue. If <em style="color:blue">&lt;obj&gt;</em> is non nil queue it up. In order to create a queue
+with nil as the first element, call queue with no arguments and then call
+enqueue with nil as the value to queue.</pre>
+<h2 style="color=darkblue">dequeue<b style="color=blue">&nbsp; &nbsp(queue)</b></h2><pre>Dequeue an object. Return the object queued.</pre>
+<h2 style="color=darkblue">do-nqueue<b style="color=blue">&nbsp; &nbsp((var que &amp;optional result) &amp;body body)</b></h2><pre>Loop construct for queues that sets <em style="color:blue">&lt;var&gt;</em> to the successive values of the
+queue, <em style="color:blue">&lt;que&gt;</em>, (by dequeuing) and then evaluates <em style="color:blue">&lt;body&gt;</em>. If the symbol <em style="color:blue">&lt;result&gt;</em> 
+is supplied, its value is returned when the iteration is finished.<div style="color:darkgreen">
+Example: (rsm.queue:do-nqueue (item que) (format t "queue item = ~s~%" item))  </div>
+This drains the queue, <em style="color:blue">&lt;que&gt;</em>, printing each of the elements of the queue.  <b style="color:red">
+Note: </b> This is a destructive function. If <em style="color:blue">&lt;body&gt;</em> mutates <em style="color:blue">&lt;que&gt;</em>, this 
+construct could go into an infinite loop.</pre>
+<h2 style="color=darkblue">do-queue<b style="color=blue">&nbsp; &nbsp((var que &amp;optional result) &amp;body body)</b></h2><pre>Loop construct for queues that sets <em style="color:blue">&lt;var&gt;</em> to the successive values of a copy
+of the queue, <em style="color:blue">&lt;que&gt;</em>, (by dequeuing) and then evaluates <em style="color:blue">&lt;body&gt;</em>. If the symbol 
+<em style="color:blue">&lt;result&gt;</em> is supplied, its value is returned when the iteration is finished.<div style="color:darkgreen">
+Example: (rsm.queue:do-queue (item que) (format t "queue item = ~s~%" item))  </div>
+This drains a copy of the queue, <em style="color:blue">&lt;que&gt;</em>, printing each of the elements 
+of the queue.</pre>
+<h2 style="color=darkblue">empty-p<b style="color=blue">&nbsp; &nbsp(queue)</b></h2><pre>Is the queue empty?</pre>
+<h2 style="color=darkblue">enqueue<b style="color=blue">&nbsp; &nbsp(obj queue)</b></h2><pre>Enqueue an object. Return the queue.</pre>
+<h2 style="color=darkblue">get-first<b style="color=blue">&nbsp; &nbsp(queue)</b></h2><pre>Get the next element the queue would dequeue. Does not affect the queue.</pre>
+<h2 style="color=darkblue">get-last<b style="color=blue">&nbsp; &nbsp(queue)</b></h2><pre>Get the last element the queue would dequeue. Does not affect the queue.</pre>
+<h2 style="color=darkblue">list-&gt;queue<b style="color=blue">&nbsp; &nbsp(list)</b></h2><pre>Return a copy of the list as a queue. The first element of the list
+will be the first element queued, and the last element of the list will 
+be the last element queued.</pre>
+<h2 style="color=darkblue">nappend-queue<b style="color=blue">&nbsp; &nbsp(&amp;rest queues)</b></h2><pre>Append (destructively (like nconc) the queues <em style="color:blue">&lt;queues&gt;</em> essentially by
+nconsing the internal list of the first nonempty queue with the lists from the
+rest of the non empty queues.  <b style="color:red">
+Note: </b> After this operation, do not use the other queues.</pre>
+<h2 style="color=darkblue">nget-list<b style="color=blue">&nbsp; &nbsp(queue)</b></h2><pre>Get the internal list of queue, <em style="color:blue">&lt;queue&gt;</em>. The integrity of the queue cannot be
+guaranteed if this list is destructively modified.</pre>
+<h2 style="color=darkblue">nsort-queue<b style="color=blue">&nbsp; &nbsp(queue sort-func)</b></h2><pre>Sort a queue, <em style="color:blue">&lt;queue&gt;</em>, in place using sort function <em style="color:blue">&lt;sort-func&gt;</em>.</pre>
+<h2 style="color=darkblue">queue-&gt;list<b style="color=blue">&nbsp; &nbsp(que)</b></h2><pre>Return a copy of the queue as a list, from 'first in' to 'last in'.</pre>
+<h2 style="color=darkblue">queue-p<b style="color=blue">&nbsp; &nbsp(que)</b></h2><pre>Returns true if <em style="color:blue">&lt;que&gt;</em> is a queue.</pre>
+<h2 style="color=darkblue">sort-queue<b style="color=blue">&nbsp; &nbsp(queue sort-func)</b></h2><pre>Sort a copy of queue, <em style="color:blue">&lt;queue&gt;</em>, using sort function <em style="color:blue">&lt;sort-func&gt;</em>.</pre></td></tr></table></body>

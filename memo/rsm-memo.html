@@ -1,0 +1,26 @@
+<head><title>rsm.memo</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Memoization Functions" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="memoize, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.memo</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>Provide function memoizers and function memo-caching functions of a single
+input.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+defmemo :</b> A macro that will define a memoized function.<b style="color:darkblue">
+defcache:</b> A macro that will define a memoized function with a storage limit.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">defcache<b style="color=blue">&nbsp; &nbsp(fn (arg) body &amp;key cache-size test)</b></h2><pre>Define a function of one arg which will memoize the last
+<em style="color:blue">&lt;cache-size&gt;</em> values. <em style="color:blue">&lt;arg&gt;</em> is stored in a hash table using test <em style="color:blue">&lt;test&gt;</em>.</pre>
+<h2 style="color=darkblue">defmemo<b style="color=blue">&nbsp; &nbsp(fn (arg) body &amp;key test)</b></h2><pre>Define a function of one arg which memoizes its values. <em style="color:blue">&lt;arg&gt;</em> is stored 
+in a hash table using test <em style="color:blue">&lt;test&gt;</em>.</pre></td></tr></table></body>

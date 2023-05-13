@@ -1,0 +1,78 @@
+<head><title>rsm.finance</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Financial Loan Utilities" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="finance, loan, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.finance</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.1</h2>
+<h2>Overview:</h2>
+<pre>Functions to compute loan financing. Loans are assumed to compound monthly.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+calc-num-payments    :</b> Calculate the number of payments to make for a loan 
+                       given the initial debt; the annual interest rate; 
+                       and the monthly payment.
+<b style="color:darkblue">
+display-num-payments :</b> Display the number of payments to make for a loan.
+                       (uses calc-num-payments)
+
+<b style="color:darkblue">
+calc-monthly-payment   :</b> Calculate the monthly payments for a loan 
+                         given initial debt; years to pay; and the 
+                         annual interest rate.
+<b style="color:darkblue">
+display-monthly-payment:</b> Display the monthly payment for a loan.
+                         (uses calc-monthly-payment)
+
+<b style="color:darkblue">
+calc-initial-debt    :</b> Calculate the initial debt given: years to pay;
+                       the annual interest rate; and the monthly payment.
+<b style="color:darkblue">
+display-initial-debt :</b> Display the initial debt of a loan.
+                       (uses calc-initial-debt)
+
+<b style="color:darkblue">
+calc-interest-rate   :</b> Calculate the annual interest rate given: 
+                       the years to pay; the annual interest rate; 
+                       and the monthly payment.
+<b style="color:darkblue">
+display-interest-rate:</b> Display the interest rate of a loan.
+                       (uses calc-initial-debt)
+<b style="color:darkblue">
+non-solvable:</b> A Condition that represents an inablity to solve 
+              a financial problem. This may be because the problem
+              is impossible, or that the solution is numerically unstable.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">calc-initial-debt<b style="color=blue">&nbsp; &nbsp(years-to-pay annual-interest-rate monthly-payment)</b></h2><pre>Calculates the initial debt that one can pay off in <em style="color:blue">&lt;years-to-pay&gt;</em> years at a
+monthly payment rate of <em style="color:blue">&lt;monthly-payment&gt;</em> with an annual interest rate of
+<em style="color:blue">&lt;annual-interest-rate&gt;</em>. Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">calc-interest-rate<b style="color=blue">&nbsp; &nbsp(initial-debt monthly-payment years)</b></h2><pre>Calculates the interest rate at which an initial debt of <em style="color:blue">&lt;initial-debt&gt;</em> will
+be paid off in <em style="color:blue">&lt;years&gt;</em> years with monthly payment, <em style="color:blue">&lt;monthly-payment&gt;</em>.
+Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">calc-monthly-payment<b style="color=blue">&nbsp; &nbsp(debt years-to-pay annual-interest-rate)</b></h2><pre>Calculates the monthly payment that one needs in order to pay off a debt of
+<em style="color:blue">&lt;debt&gt;</em> in <em style="color:blue">&lt;years-to-pay&gt;</em> years at an interest rate of <em style="color:blue">&lt;annual-interest-rate&gt;</em>.
+Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">calc-num-payments<b style="color=blue">&nbsp; &nbsp(initial-debt annual-interest-rate monthly-payment)</b></h2><pre>Calculates the number of payments to pay off an initial debt with 
+a given annual interest rate and monthly payment. The debt is assumed 
+to compound monthly. Returns a multiple value: The number of payments; 
+the number of whole years this represents; the number of months after the 
+number of whole years; the total pay-out; and the last payment.</pre>
+<h2 style="color=darkblue">display-initial-debt<b style="color=blue">&nbsp; &nbsp(years-to-pay annual-interest-rate monthly-payment)</b></h2><pre>Displays the initial debt that one can pay off in <em style="color:blue">&lt;years-to-pay&gt;</em> years at a
+monthly payment rate of <em style="color:blue">&lt;monthly-payment&gt;</em> with an annual interest rate of
+<em style="color:blue">&lt;annual-interest-rate&gt;</em>. Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">display-interest-rate<b style="color=blue">&nbsp; &nbsp(initial-debt monthly-payment years)</b></h2><pre>Displays the interest rate at which an initial debt of <em style="color:blue">&lt;initial-debt&gt;</em> will be
+paid off in <em style="color:blue">&lt;years&gt;</em> years with monthly payment, <em style="color:blue">&lt;monthly-payment&gt;</em>.
+Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">display-monthly-payment<b style="color=blue">&nbsp; &nbsp(debt years-to-pay annual-interest-rate)</b></h2><pre>Displays the monthly payment that one needs in order to pay off a debt of
+<em style="color:blue">&lt;debt&gt;</em> in <em style="color:blue">&lt;years-to-pay&gt;</em> years at an interest rate of <em style="color:blue">&lt;annual-interest-rate&gt;</em>.
+Compounding is assumed to occur monthly.</pre>
+<h2 style="color=darkblue">display-num-payments<b style="color=blue">&nbsp; &nbsp(initial-debt annual-interest-rate monthly-payment)</b></h2><pre>Displays the number of payments to pay off an initial debt with a given
+annual interest rate and monthly payment. The debt is assumed to compound
+monthly.</pre></td></tr></table></body>

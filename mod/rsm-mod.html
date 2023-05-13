@@ -1,0 +1,84 @@
+<head><title>rsm.mod</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Modular Arithmetic" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="modular, arithmetic, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.mod</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.2</h2>
+<h2>Overview:</h2>
+<pre>This package supports modular arithmetic.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
++:</b> Add numbers over Z mod n.<b style="color:darkblue">
+*:</b> Multiply numbers over Z mod n.<b style="color:darkblue">
+^:</b> Exponentiate over Z mod n.
+
+<b style="color:darkblue">
+euler-phi:</b> Return the Euler phi function of a number.<b style="color:darkblue">
+factors  :</b> Return the factors of a number.<b style="color:darkblue">
+gcd-with-pair:</b> Gets the gcd of two numbers a and b returning also 
+    the integer pair, (r s), such that r*a + s*b = gcd(a,b).<b style="color:darkblue">
+has-inverse-p:</b> Does a number have in inverse in Z mod n?<b style="color:darkblue">
+inverse  :</b> Find the inverse (if it exists) in Z mod n.<b style="color:darkblue">
+ppow     :</b> Exponentiate over Z mod p where p is prime.
+<b style="color:darkblue">
+rational-approx:</b> Returns a simple rational approximation 
+                 within a given tolerance.<b style="color:darkblue">
+solve-congruence-system:</b> Solve for x: x = a_i mod m_i; i in [1,N]
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">*<b style="color=blue">&nbsp; &nbsp(mod &amp;rest args)</b></h2><pre>Multiply <em style="color:blue">&lt;args&gt;</em> in Mod <em style="color:blue">&lt;mod&gt;</em> arithmetic.<div style="color:darkgreen">
+Example: (rsm.mod:* 3 2 5) </div>
+            1</pre>
+<h2 style="color=darkblue">+<b style="color=blue">&nbsp; &nbsp(mod &amp;rest args)</b></h2><pre>Add <em style="color:blue">&lt;args&gt;</em> in Mod <em style="color:blue">&lt;mod&gt;</em> arithmetic.<div style="color:darkgreen">
+Example: (rsm.mod:+ 3 3 5) </div>
+            2</pre>
+<h2 style="color=darkblue">^<b style="color=blue">&nbsp; &nbsp(b n mod &amp;key (e-phi 0))</b></h2><pre>Raise <em style="color:blue">&lt;b&gt;</em> to the <em style="color:blue">&lt;n&gt;</em>th power mod <em style="color:blue">&lt;mod&gt;</em> by repeated squaring. If <em style="color:blue">&lt;e-phi&gt;</em> 
+is non zero, use the generalization of Fermat's little theorem: 
+b^phi(mod) = 1 mod mod, when the gcd of b and mod is 1. The theorem is 
+used to replace b^n with b^r where r = mod(n, phi(mod)) and phi is 
+the Euler Phi function.<div style="color:darkgreen">
+Example: (rsm.mod:^ 213317 527131763 173) </div>
+          170<div style="color:darkgreen">
+Example: (rsm.mod:^ 7 2134145213317 33 :e-phi 20) </div>
+          28</pre>
+<h2 style="color=darkblue">euler-phi<b style="color=blue">&nbsp; &nbsp(n)</b></h2><pre>Computes the Euler Phi function of <em style="color:blue">&lt;n&gt;</em>.<div style="color:darkgreen">
+Example: (rsm.mod:euler-phi 15) </div>
+          8</pre>
+<h2 style="color=darkblue">factors<b style="color=blue">&nbsp; &nbsp(n &amp;key (no-dups t))</b></h2><pre>Computes and returns a list of the primes factors of <em style="color:blue">&lt;n&gt;</em>. If <em style="color:blue">&lt;no-dups&gt;</em> is
+true, then no multiple entries of a factor are returned.<div style="color:darkgreen">
+Example: (rsm.mod:factors 100) </div>
+         (2 5)<div style="color:darkgreen">
+Example: (rsm.mod:factors 100 :no-dups nil) </div>
+         (2 2 5 5)</pre>
+<h2 style="color=darkblue">gcd-with-pair<b style="color=blue">&nbsp; &nbsp(n m)</b></h2><pre>Returns two values: The gcd of <em style="color:blue">&lt;n&gt;</em> and <em style="color:blue">&lt;m&gt;</em>, and the list (r s) such that 
+r * n + s * m = gcd(n,m).<div style="color:darkgreen">
+Example: (rsm.mod:gcd-with-pair 15 21) </div>
+         3
+         (3 -2)</pre>
+<h2 style="color=darkblue">has-inverse-p<b style="color=blue">&nbsp; &nbsp(a n)</b></h2><pre>Does <em style="color:blue">&lt;a&gt;</em> have an inverse in Z mod <em style="color:blue">&lt;n&gt;</em>?<div style="color:darkgreen">
+Example: (rsm.mod:has-inverse-p 10 100) </div>
+         nil</pre>
+<h2 style="color=darkblue">inverse<b style="color=blue">&nbsp; &nbsp(a n &amp;optional (error nil) (not-invert-return 0))</b></h2><pre>Finds the inverse of <em style="color:blue">&lt;a&gt;</em> in Z mod <em style="color:blue">&lt;n&gt;</em>. If <em style="color:blue">&lt;a&gt;</em> inverse does not exist, 
+an error is thrown if <em style="color:blue">&lt;error&gt;</em> is non nil. If <em style="color:blue">&lt;error&gt;</em> is nil, then 
+<em style="color:blue">&lt;not-invert-return&gt;</em> is returned.<div style="color:darkgreen">
+Example: (rsm.mod:inverse 21 100) </div>
+          81</pre>
+<h2 style="color=darkblue">ppow<b style="color=blue">&nbsp; &nbsp(b n p)</b></h2><pre>Raise <em style="color:blue">&lt;b&gt;</em> to the <em style="color:blue">&lt;n&gt;</em>th power in the field Z mod <em style="color:blue">&lt;p&gt;</em>. Here <em style="color:blue">&lt;p&gt;</em> must be prime.<div style="color:darkgreen">
+Example: (rsm.mod:ppow 12 100 7) </div>
+          2</pre>
+<h2 style="color=darkblue">rational-approx<b style="color=blue">&nbsp; &nbsp(number &amp;optional (epsilon nil))</b></h2><pre>Find a simple rational approximation to <em style="color:blue">&lt;number&gt;</em> within <em style="color:blue">&lt;epsilon&gt;</em>.<div style="color:darkgreen">
+Example: (rsm.mod:rational-approx pi 0.0000003) </div>
+         355/113</pre>
+<h2 style="color=darkblue">solve-congruence-system<b style="color=blue">&nbsp; &nbsp(as ms)</b></h2><pre>Use the Chinese remainder theorem to solve for x, the system of 
+congruences: x = as_i mod ms_i. The moduli, <em style="color:blue">&lt;ms&gt;</em>, must all be pairwise 
+relatively prime. x will be unique in Z mod (product of <em style="color:blue">&lt;ms&gt;</em>'s).<div style="color:darkgreen">
+Example: (rsm.mod:solve-congruence-system '(1 2 3) '(2 3 5)) </div>
+          23</pre></td></tr></table></body>

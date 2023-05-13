@@ -1,0 +1,88 @@
+<head><title>rsm.modal</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Modal Logic" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="modal, logic, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.modal</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p><table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.0</h2>
+<h2>Overview:</h2>
+<pre>A package to support modal logic. Basically, a modal system supports a 
+logic system augmented with agents and "agent knowledge operators" along 
+with a collection of possibility worlds. A modal system is described by 
+a Kripke system which connects agents to worlds and a structure that 
+represents the basic propositions in the logic system. In our treatment, 
+all worlds and agents are represented by non-negative integers.
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+defmodal    :</b> Macro to define a modal system.<b style="color:darkblue">
+agent-knows :</b> Predicate that determines if an agent knows that a 
+              proposition is true.<b style="color:darkblue">
+is-true?    :</b> Predicate that determines if a proposition is true in a 
+              given world.<b style="color:darkblue">
+make-world  :</b> Makes a modal system.<b style="color:darkblue">
+satisfies?  :</b> Predicate that determines if a proposition is true in all 
+              worlds.
+<b style="color:darkblue">
+clear-modal-systems :</b> Remove all modal systems.<b style="color:darkblue">
+get-modal-system    :</b> Get a modal system.<b style="color:darkblue">
+set-modal-system    :</b> Set the modal system to use.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">agent-knows<b style="color=blue">&nbsp; &nbsp(agent world prop &amp;key (modal-system *modal-system*))</b></h2><pre>For all the worlds that agent <em style="color:blue">&lt;agent&gt;</em> regards as possible while in world
+<em style="color:blue">&lt;world&gt;</em>, check that the proposition <em style="color:blue">&lt;prop&gt;</em> is true in the modal system
+<em style="color:blue">&lt;modal-system&gt;</em>.</pre>
+<h2 style="color=darkblue">clear-modal-systems<b style="color=blue"> ()</b></h2><pre>Clear the modal systems hash table.</pre>
+<h2 style="color=darkblue">defmodal<b style="color=blue">&nbsp; &nbsp(sym &amp;key kripke props primitive-truth-function)</b></h2><pre>Produces a modal logic system based on a kripke structure
+and a basic proposition structure. The kripke form is 
+((agent world (worlds))...)
+This means that agent <em style="color:blue">&lt;agent&gt;</em> in world <em style="color:blue">&lt;world&gt;</em> believes that the worlds in 
+<em style="color:blue">&lt;worlds&gt;</em> are possible.
+
+The props form is: 
+((world proposition truth-value)...).
+This means that in world <em style="color:blue">&lt;world&gt;</em> proposition <em style="color:blue">&lt;prop&gt;</em> has logical value <em style="color:blue">&lt;logical&gt;</em>.
+<b style="color:red">
+Note: </b> After defmodal has been executed, 
+the supporting logic functions will use this modal system as the basis 
+of all logic queries. Change the modal system that the query functions work
+on by using the macro set-modal-system.<div style="color:darkgreen">
+Example: (rsm.modal:defmodal my-world  </div>
+             :kripke 
+           ((0 1 (1 2)) (0 2 (1 2)) (0 3 (3))
+                        (1 1 (1 3)) (1 2 (2 1)) (1 3 (3 2)))
+           :props
+           ((1 "sky is white" t) (2 "sky is white" t)
+                                   (3 "light is on" t)))</pre>
+<h2 style="color=darkblue">get-modal-system<b style="color=blue">&nbsp; &nbsp(sym &amp;optional error)</b></h2><pre>Gets the current modal system represented by the symbol, <em style="color:blue">&lt;sym&gt;</em>.
+Throw an error if <em style="color:blue">&lt;error&gt;</em> is true and the modal system is not found;
+otherwise, return nil.</pre>
+<h2 style="color=darkblue">is-true?<b style="color=blue">&nbsp; &nbsp(world prop &amp;key (modal-system *modal-system*))</b></h2><pre>Is proposition <em style="color:blue">&lt;prop&gt;</em> true in world <em style="color:blue">&lt;world&gt;</em> in 
+modal system <em style="color:blue">&lt;modal-system&gt;</em>?</pre>
+<h2 style="color=darkblue">make-world<b style="color=blue">&nbsp; &nbsp(name kripke-info prop-info &amp;key
+ (primitive-truth-function +primitive-truth-function+))</b></h2><pre>Make a modal system from a form representing a kripke structure 
+and a form representing the truth of primitive propositions in the 
+in various worlds. There is also a keyword option that defines a default
+truth function which is used when the <em style="color:blue">&lt;prop-info&gt;</em> does not define the 
+logic of a particular world and proposition.
+kripke-info has the form: '((agent world (worlds)) ...)
+This means that agent <em style="color:blue">&lt;agent&gt;</em> in world <em style="color:blue">&lt;world&gt;</em> believes that the worlds in 
+<em style="color:blue">&lt;worlds&gt;</em> are possible.<div style="color:darkgreen">
+Example: </div>
+'((0 1 (1 2)) (0 2 (1 2)) (0 3 (3))
+  (1 1 (1 3)) (1 2 (2 1)) (1 3 (3 2))))
+
+prop-info has the form: '((world prop logical)...)
+This means that in world <em style="color:blue">&lt;world&gt;</em> proposition <em style="color:blue">&lt;prop&gt;</em> has logical value <em style="color:blue">&lt;logical&gt;</em>.<div style="color:darkgreen">
+Example: </div>
+ '((1 "sky is white" false) (2 "sky is white" true)
+   (3 "light is on" true))</pre>
+<h2 style="color=darkblue">satisfies?<b style="color=blue">&nbsp; &nbsp(prop &amp;key (modal-system *modal-system*))</b></h2><pre>Is proposition <em style="color:blue">&lt;prop&gt;</em> true in all worlds in modal system <em style="color:blue">&lt;modal-system&gt;</em>?</pre>
+<h2 style="color=darkblue">set-modal-system<b style="color=blue">&nbsp; &nbsp(sym &amp;optional error)</b></h2><pre>Set the current modal system to the one represented by the symbol, <em style="color:blue">&lt;sym&gt;</em>.
+Throw an error if <em style="color:blue">&lt;error&gt;</em> is true and the modal system is not found;
+otherwise, leave the current modal system as it is and return nil.</pre></td></tr></table></body>

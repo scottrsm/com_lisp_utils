@@ -1,0 +1,182 @@
+<head><title>rsm.fuzzy</title>
+<meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="description" content="Fuzzy Dynamic Systems" />
+<meta name="author" content="R. Scott McIntire" />
+<meta name="keywords" content="fuzzy, dynamic, Lisp" />
+<meta name="generator" content="LML2-1.4.1" />
+<center><h1>Documentation for package rsm.fuzzy</h1></center></head>
+<body bgcolor="#C5C5C5"><hr color="lightred" style="height=10" /><p></p>
+<table border="10" bordercolor="navyblue" align="center" cellspacing="15"><tr bgcolor="#A5A5A5"><td><h2>Author : R. Scott McIntire</h2>
+<h2>Version: 1.2</h2>
+<h2>Overview:</h2>
+<pre>DESCRIPTION: A package to define and compute with fuzzy systems.   
+   
+Fuzzy logic allows one to compute numerically with 
+objects that are specified and related in a somewhat 
+sloppy linguistic way. The implementation here uses four notions: 
+A fuzzy adjective; a fuzzy adjective group; a fuzzy variable; 
+and a fuzzy rule.
+
+Fuzzy adjective: A named function (defined here as a piecewise 
+                 linear function).
+
+Fuzzy adjective group: A named group of adjectives.
+
+Fuzzy variable : A named object with a numeric value and, optionally, 
+                 a list of rules that determine it's value from other 
+                 fuzzy variables.
+
+Fuzzy rule     : A named object that relates one or more fuzzy variables 
+                 (in a linguistic way) with a fuzzy variable associated 
+                 with this rule.
+
+In addition, there is a fuzzy class (and associated deffuzzy macro) that 
+defines a named collection of fuzzy adjectives and fuzzy variables.
+NOTE: If a fuzzy variable is specified in deffuzzy with fuzzy rules, then
+      any fuzzy variables referred in the rules must have been defined
+      earlier in the macro.
+
+The form deffuzzy is:
+
+(deffuzzy &lt;name&gt;
+    :adjs
+  ((&lt;adj1&gt; ((&lt;begin&gt; &lt;val&gt;) ... (&lt;end&gt; &lt;val&gt;)))
+    ...)
+  :adj-groups 
+  ((&lt;adj-group1&gt; (&lt;name1&gt; ...))
+    ...)
+  :vars
+  ((&lt;var-without-rules&gt; &lt;val&gt; :adj-group &lt;adj-group&gt;)
+   (&lt;var-with-rules&gt; &lt;val&gt;
+      :adj-group &lt;adj-group&gt;
+      :rules ((&lt;rule1&gt; IF &lt;rule-logic&gt; THEN &lt;adj&gt;)
+              ...)))
+  :dynamics
+  ((:constants ((c1 value1) (c2 value2) ...))
+   (:controls (con1 con2 ...))
+   (:equations ((x (+ x (* 0.01 con1))) 
+                (y (+ y (* 0.01 con2))))))
+              
+
+Adjectives may also be described using the key words tri and trap.
+This allow the user to describe common fuzzy adjectives whose graphs
+have the shape of triangles or trapezoids.
+
+For example the form, (tri 1 3 5), is used to describe a fuzzy adjective
+that is zero when "x" is below 1 or greater than 5. The function in 
+between 1 and 5 is triangular shaped starting at 0 when "x" is 1; 
+rising to a maximum of 1 when "x" is 3; and falling back to 0 when "x" is 5.
+
+The trap key word is similar.
+For example: the form, (trap 2 4 5 7), is used to describe a fuzzy adjective
+that is zero when "x" is below 2 or greater than 7. The graph of the 
+function in between 2 and 7 is a trapezoid starting at 0 when "x" is 2; 
+rising to a maximum of 1 when "x" is 4; remaining at 1 until 5; and 
+falling back to 0 when "x" is 7.
+
+In addition, there is also a :range keyword which may be used to specify 
+a family of adjectives that have triangular shape filling an interval with
+a certain amount of overlap. For example, the form: 
+(:range (one two three) 1.0 5.0 0.25)
+indicates that there are to be three adjectives with symbols, 'one, 'two, 
+and 'three. They are triangular functions with the left end point of 'one
+at 1.0 and the the right end point of 'three at 5.0. Each adjective overlaps 
+by 25%. See the examples in the file example.lisp.
+
+ HOW TO COMPUTE A FUZZY VARIABLE'S NUMERIC VALUE FROM ITS RULES:
+ Here we sketch the idea. To start, suppose that
+ a fuzzy variable z depends on fuzzy variables x and y by way of 
+ the following rules:
+     IF (x IS small) AND (y IS VERY blue) THEN z IS dry
+     IF (x IS large) OR (y IS SOMEWHAT green) THEN z IS wet 
+     IF (x IS medium) AND (y IS NOT yellow) THEN z IS moist 
+
+   Then to calculate the value of the fuzzy var z which depends on 
+   fuzzy variables x and y through the rules above, do:
+     Fire all the rules governing z and then get the numeric value of z by 
+     defuzzification (fuzzy centroid method).
+     This means perform these two steps:
+      1). Fire one rule (say the first one above - the z is dry rule). 
+           This is done as follows:
+           Get the numeric measures of "how small x is" and 
+           "how very blue y is"; name them x_small, y_blue respectively.
+           Next, we get a numeric result of the ANDing of the 
+           "x phrase" with the "y phrase" by taking the minimum of 
+           x_small and y_blue. Now compute the area and the moment of the 
+           fuzzy adjective function, dry, cut by the 
+           horizontal line = Min(x_small, y_blue). 
+           (NOTE: if we had ORed the phrases the corresponding numeric 
+           function would  be Max.) 
+      2). Do the same for the next rule and then set the numeric value 
+          of z to the fuzzy centroid - which is found by the formula 
+          (sum of all moments) / (sum of all areas).
+
+
+ RUNNING FUZZY SYSTEM DYNAMICS
+To use this package for a fuzzy system with a controller you must
+fill out the sections in the dynamics portion of the system 
+definition using the keyword :dynamics. That is, describe the 
+constants the controllers and the dynamics equations that related 
+the controllers to the underlying state values. See the last example 
+in the file exaple.lisp. The time variable is the symbol 'time. That is,
+if one has a non-autonomous dynamical system, the symbol used to 
+represent time is 'time.
+
+
+
+<b style="color:darkblue">Export Summary:</b>
+<b style="color:darkblue">
+deffuzzy                       :</b> Create a fuzzy system.<b style="color:darkblue">
+make-fuzzy-system              :</b> Make a fuzzy system (function).<b style="color:darkblue">
+clear-fuzzy-systems            :</b> Clear out the fuzzy systems.
+  <b style="color:darkblue">
+make-adj make-var make-rule    :</b> Constructors
+   <b style="color:darkblue">
+find-adj find-var find-rule    :</b> Inspectors   <b style="color:darkblue">
+print-adjs print-vars          :</b> Inspectors<b style="color:darkblue">
+find-fuzzy-system              :</b> Inspector
+   <b style="color:darkblue">
+get-var-val                    :</b> Getter<b style="color:darkblue">
+set-var-val                    :</b> Setter<b style="color:darkblue">
+set-fuzzy-system               :</b> Setter
+   <b style="color:darkblue">
+fire-rules-get-value           :</b> Determine fuzzy var's value <b style="color:darkblue">
+                               :</b>  using its fuzzy rules.<b style="color:darkblue">
+fire))                         :</b> Convenience macro for <b style="color:darkblue">
+                               :</b>  fire-rules-get-value.<b style="color:darkblue">
+run-dynamics                   :</b> Runs the dynamics of the fuzzy sytem.
+</pre>
+</td></tr><tr bgcolor="#C5C5C5"></tr><tr bgcolor="#C5C5C5"><td>
+
+<h2 style="color=darkblue">clear-fuzzy-systems<b style="color=blue"> ()</b></h2><pre>Remove all the fuzzy systems.</pre>
+<h2 style="color=darkblue">deffuzzy<b style="color=blue">&nbsp; &nbsp(sym &amp;key adjs adj-groups vars dynamics)</b></h2><pre>Make a fuzzy system. Set the global variable *fuzzy-sys* to the newly
+created system. All queries default to this system.
+Returns a new fuzzy-system object.</pre>
+<h2 style="color=darkblue">find-adj<b style="color=blue">&nbsp; &nbsp(sym &amp;key fuzzy-sys)</b></h2><pre>Find the fuzzy adjective associated with the symbol, <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">find-fuzzy-system<b style="color=blue">&nbsp; &nbsp(sym)</b></h2><pre>Find a fuzzy system associated to symbol, <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">find-rule<b style="color=blue">&nbsp; &nbsp(rule-sym var-sym &amp;key fuzzy-sys)</b></h2><pre>Find the fuzzy rule associated with symbol, <em style="color:blue">&lt;fule-sym&gt;</em>, owned by 
+the fuzzy variable associated with the symbol, <em style="color:blue">&lt;var-sym&gt;</em>.</pre>
+<h2 style="color=darkblue">find-var<b style="color=blue">&nbsp; &nbsp(sym &amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Find the fuzzy variable associated with the symbol, <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">fire<b style="color=blue">&nbsp; &nbsp(var-sym &amp;key fuzzy-sys)</b></h2><pre>Syntactic sugar for fire-rules-get-value.
+Takes a variable (symbol) and returns the value.</pre>
+<h2 style="color=darkblue">fire-rules-get-value<b style="color=blue">&nbsp; &nbsp(var)</b></h2><pre>Fires the rules of <em style="color:blue">&lt;var&gt;</em> and then uses the fuzzy centroid method to 
+obtain the new value.<b style="color:red">
+Note: </b> Does not change the current value.</pre>
+<h2 style="color=darkblue">get-var-val<b style="color=blue">&nbsp; &nbsp(sym &amp;key fuzzy-sys)</b></h2><pre>Get the value of fuzzy variable, <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">make-adj<b style="color=blue">&nbsp; &nbsp(sym func-spec &amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Make a fuzzy adjective.<div style="color:darkgreen">
+Example: (make-adj 'small '((1.0 1.0) (3.0 2.0) (4.0 0.5) (6.5 0.0))) </div></pre>
+<h2 style="color=darkblue">make-fuzzy-system<b style="color=blue">&nbsp; &nbsp(sym adjs adj-groups vars)</b></h2><pre>Make a fuzzy-system associating it with <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">make-rule<b style="color=blue">&nbsp; &nbsp(rule var &amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Make a fuzzy rule.<div style="color:darkgreen">
+Example: (make-rule '(r1 if (and (x is small) (y is blue)) then dry)) </div></pre>
+<h2 style="color=darkblue">make-var<b style="color=blue">&nbsp; &nbsp(sym value &amp;key adj-group rules (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Make a fuzzy variable.<div style="color:darkgreen">
+Example: (make-var 'z 1.2 :adj-group 'humidity </div>
+                     :rules '((r1 (and (x is small) (y is blue)) dry) 
+                             (r2 (and (x is large) (y is green)) wet)))</pre>
+<h2 style="color=darkblue">print-adjs<b style="color=blue">&nbsp; &nbsp(&amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Print out all the fuzzy adjectives.</pre>
+<h2 style="color=darkblue">print-vars<b style="color=blue">&nbsp; &nbsp(&amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Print out all the fuzzy variables.</pre>
+<h2 style="color=darkblue">run-dynamics<b style="color=blue">&nbsp; &nbsp(begin end &amp;key (fuzzy-sys *fuzzy-sys*))</b></h2><pre>Runs the dynamics of the fuzzy system, fuzzy-sys, from time = begin
+until time = end.</pre>
+<h2 style="color=darkblue">set-fuzzy-system<b style="color=blue">&nbsp; &nbsp(sym)</b></h2><pre>Set the current fuzzy system to the one associated with symbol, <em style="color:blue">&lt;sym&gt;</em>.</pre>
+<h2 style="color=darkblue">set-var-val<b style="color=blue">&nbsp; &nbsp(sym val &amp;key fuzzy-sys)</b></h2><pre>Set the value of fuzzy variable, <em style="color:blue">&lt;sym&gt;</em>.</pre></td></tr></table></body>

@@ -1,0 +1,38 @@
+   
+Discussion of effect of setting a modulus on the polynomial calculations:
+
+1).
+A modulus may be set which is a positive integer greater than 1.
+The effect on subsequent mathematical operations will be to mod
+all the resulting coefficients by this value. This includes real and
+complex coefficients. Also, the simplification X^mod = X can be used if
+mod is prime. This simplification will be used if when setting the 
+modulus the keyword :prime is true in the call to set-modulus.
+Example:  
+> set-modulus 11 :field? t
+ This sets the modulus to 11 and tells the simplification software to 
+ use the simplification X^11 = X. This makes sense when the coefficients
+ in the polynomials considered are integers. The user may also want
+ this effect in the case when the coefficients are real or complex.
+ For instance, the user may wish to consider variables take values in 
+ Z mod 11, while the coefficients takes values in the real or complex
+ numbers (mod 11). The default value of :field? in set-modulus is nil.
+ So, even if the modulus is prime, you must tell the software with this
+ keyword that it is ok to use the simplification X^mod = X.
+
+NOTE: X mod p is a field if and ony if p is prime.
+
+
+2).
+If a polynomial is created with a modulus (nil or otherwise) and the the 
+modulus is set to another integer, then polynomial will display itself 
+using the new modulus. If the modulus is returned to the value used to 
+create the polynomial, the polynomial will display itself as it did originally.
+
+
+3).
+NOTE: If computations seem to give the wrong answer, check the state of the 
+system with (rsm.mpoly:report-state).
+
+
+     
