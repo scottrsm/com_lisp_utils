@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: mpoly-test.lisp,v 1.6 2003/10/24 21:10:12 rscottmcintire Exp $
+;;;; $Id: mpoly-test.lisp,v 1.6 2003/10/24 21:10:12 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)

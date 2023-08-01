@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: modal-test.lisp,v 1.2 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: modal-test.lisp,v 1.2 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)
@@ -25,10 +25,10 @@
 ;;;; SET UP THE MODAL LOGIC SYSTEM TO TEST.
 
 ;;; A modal logic system describing primitive propositions that are true 
-;;; in certain worlds and a kripke structure describing worlds agents 
+;;; in certain worlds and a Kripke structure describing worlds agents 
 ;;; think are possible.
 (defmodal my-world 
-    :kripke 
+    :Kripke 
   ((0 1 (1 2))                          ; Agent 0 in world 1 knows that 
                                         ;  worlds 1 and 2 are possible.
    (0 2 (1 2))                          ; Agent 0 in world 2 knows that worlds 

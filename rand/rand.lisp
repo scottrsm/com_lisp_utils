@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rand.lisp,v 1.6 2003/10/20 02:26:33 rscottmcintire Exp $
+;;;; $Id: rand.lisp,v 1.6 2003/10/20 02:26:33 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.rand)
@@ -49,7 +49,7 @@
 
 (defgeneric bin-rand (rand &optional num-of-trials)
   (:documentation 
-   "Create an ASCII display of bining <num-of-trials> random numbers from the
+   "Create an ASCII display of binning <num-of-trials> random numbers from the
 random generator object, <rand>."))
 
 (defgeneric rand-dist (rand)

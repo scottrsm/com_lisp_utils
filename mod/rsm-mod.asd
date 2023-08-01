@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-mod.asd,v 1.5 2003/10/21 20:59:44 rscottmcintire Exp $
+;;;; $Id: rsm-mod.asd,v 1.5 2003/10/21 20:59:44 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-mod
   :name "rsm-mod"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@scottrsm.com>."
   :version "1.2"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Modular arithmetic."
     

@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: delayed.lisp,v 1.3 2003/09/10 22:19:24 rscottmcintire Exp $
+;;;; $Id: delayed.lisp,v 1.3 2003/09/10 22:19:24 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.delayed)
@@ -98,7 +98,7 @@ when <stream> is an ordinary list."
 
 (defun drop (n stream)
   "Drop the first <n> elements from <stream>, return the resulting (possibly
-delayed) list. Will work when <stream> is an ordinary lists as well.  In this
+delayed) list. Will work when <stream> is an ordinary lists as well. In this
 case the result is an ordinary list."
   (if (not (delayed-p stream))
       (let ((st stream))

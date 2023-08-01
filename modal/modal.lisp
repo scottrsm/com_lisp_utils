@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: modal.lisp,v 1.2 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: modal.lisp,v 1.2 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.modal)
@@ -206,14 +206,14 @@ modal system <modal-system>?"
         (return-from satisfies? nil)))
     t))
 
-(defun make-world (name kripke-info prop-info 
+(defun make-world (name Kripke-info prop-info 
                    &key (primitive-truth-function +primitive-truth-function+) )
-  "Make a modal system from a form representing a kripke structure 
+  "Make a modal system from a form representing a Kripke structure 
 and a form representing the truth of primitive propositions in the 
 in various worlds. There is also a keyword option that defines a default
 truth function which is used when the <prop-info> does not define the 
 logic of a particular world and proposition.
-kripke-info has the form: '((agent world (worlds)) ...)
+Kripke-info has the form: '((agent world (worlds)) ...)
 This means that agent <agent> in world <world> believes that the worlds in 
 <worlds> are possible.
 Example:
@@ -236,7 +236,7 @@ Example:
             (setf (modal-K ms) k-hash)
             (setf (modal-props ms) prop-hash)
             (setf (modal-primitive-truth-function ms) primitive-truth-function)
-            (loop :for inf :in kripke-info :do
+            (loop :for inf :in Kripke-info :do
               (setf (gethash (cons (car inf) (cadr inf)) k-hash) (caddr inf)))
             (loop :for inf :in prop-info :do
               (setf (gethash (cons (car inf) (cadr inf)) prop-hash) (caddr inf))
@@ -250,10 +250,10 @@ Example:
 
 (defmacro defmodal (sym 
                     &key 
-                    kripke props 
+                    Kripke props 
                     (primitive-truth-function +primitive-truth-function+))
-  "Produces a modal logic system based on a kripke structure
-and a basic proposition structure. The kripke form is 
+  "Produces a modal logic system based on a Kripke structure
+and a basic proposition structure. The Kripke form is 
 ((agent world (worlds))...)
 This means that agent <agent> in world <world> believes that the worlds in 
 <worlds> are possible.
@@ -267,7 +267,7 @@ the supporting logic functions will use this modal system as the basis
 of all logic queries. Change the modal system that the query functions work
 on by using the macro set-modal-system.
 Example: (rsm.modal:defmodal my-world 
-             :kripke 
+             :Kripke 
            ((0 1 (1 2)) (0 2 (1 2)) (0 3 (3))
                         (1 1 (1 3)) (1 2 (2 1)) (1 3 (3 2)))
            :props
@@ -276,14 +276,14 @@ Example: (rsm.modal:defmodal my-world
   `(progn
      (unless ,(symbolp sym)
        (error "First argument must be a symbol."))
-     (unless ',kripke
-       (error "defmodal: Must specify a kripke structure."))
+     (unless ',Kripke
+       (error "defmodal: Must specify a Kripke structure."))
      (unless ',props
        (error "defmodal: Must specify a props structure."))
      (when ,primitive-truth-function
        (unless (functionp ,primitive-truth-function)
          (error "defmodal: primitive-truth-function must be a function.")))
-     (make-world ,(symbol-name sym) ',kripke ',props 
+     (make-world ,(symbol-name sym) ',Kripke ',props 
                  :primitive-truth-function ,primitive-truth-function)))
 
 (defun clear-modal-systems ()

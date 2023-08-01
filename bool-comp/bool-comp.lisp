@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: bool-comp.lisp,v 1.2 2003/09/10 22:19:24 rscottmcintire Exp $
+;;;; $Id: bool-comp.lisp,v 1.2 2003/09/10 22:19:24 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.bool-comp)

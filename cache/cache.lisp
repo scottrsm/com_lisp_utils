@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: cache.lisp,v 1.4 2003/09/17 15:31:03 kevinrosenberg Exp $
+;;;; $Id: cache.lisp,v 1.4 2003/09/17 15:31:03 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.cache)

@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-bool-comp.asd,v 1.3 2003/10/17 03:30:58 rscottmcintire Exp $
+;;;; $Id: rsm-bool-comp.asd,v 1.3 2003/10/17 03:30:58 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-bool-comp
   :name "rsm-bool-comp"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.1"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Modular arithmetic."
     

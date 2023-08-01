@@ -5,7 +5,7 @@
 #  Author:       Kevin M. Rosenberg
 #  Date Started: Aug 2003
 #
-#  CVS Id:   $Id: Makefile,v 1.3 2003/09/10 22:19:25 rscottmcintire Exp $
+#  CVS Id:   $Id: Makefile,v 1.3 2003/09/10 22:19:25 scottrsm Exp $
 #
 
 base=random

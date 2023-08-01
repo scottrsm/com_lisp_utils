@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-rand.asd,v 1.5 2003/10/20 02:26:33 rscottmcintire Exp $
+;;;; $Id: rsm-rand.asd,v 1.5 2003/10/20 02:26:33 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-rand
   :name "rsm-rand"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.2"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Discrete random number generator."
     

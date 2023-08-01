@@ -4,10 +4,10 @@
 ;;;;
 ;;;; Name:          rsm-random.asd
 ;;;; Purpose:       ASDF System Definition For Loading/Testing rsm.random
-;;;; Author:        Kevin M. Rosenberg
+;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Apr 2003
 ;;;;
-;;;; $Id: rsm-random.asd,v 1.3 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: rsm-random.asd,v 1.3 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)

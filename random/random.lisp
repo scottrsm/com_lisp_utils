@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: random.lisp,v 1.5 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: random.lisp,v 1.5 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 (defpackage rsm.random

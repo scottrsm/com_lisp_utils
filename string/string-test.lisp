@@ -8,7 +8,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: string-test.lisp,v 1.3 2003/09/10 22:19:26 rscottmcintire Exp $
+;;;; $Id: string-test.lisp,v 1.3 2003/09/10 22:19:26 scottrsm Exp $
 ;;;; *************************************************************************
 
 (defpackage rsm.string.test

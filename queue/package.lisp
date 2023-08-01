@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: package.lisp,v 1.4 2003/10/20 11:26:53 rscottmcintire Exp $
+;;;; $Id: package.lisp,v 1.4 2003/10/20 11:26:53 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)

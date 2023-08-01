@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsa-examples.lisp,v 1.3 2003/09/10 22:19:26 rscottmcintire Exp $
+;;;; $Id: rsa-examples.lisp,v 1.3 2003/09/10 22:19:26 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)

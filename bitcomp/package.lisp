@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: package.lisp,v 1.2 2003/10/04 18:52:43 rscottmcintire Exp $
+;;;; $Id: package.lisp,v 1.2 2003/10/04 18:52:43 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)
@@ -68,7 +68,7 @@ or : Or zero or more compressed bit strings.
 not: Negate a compressed bit string.
 xor: Xor zero or more compressed bit strings.
 
-get-number-of-bits   : The the number of bits which are 1.
+get-number-of-bits   : The number of bits which are 1.
 get-compressed-pairs : Get the list of compressed pairs.
 make-compressed      : Make a compressed bit-string structure.
 compressed-p         : Is an object a compressed structure?

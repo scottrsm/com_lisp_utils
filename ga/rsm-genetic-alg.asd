@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-genetic-alg.asd,v 1.3 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: rsm-genetic-alg.asd,v 1.3 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-genetic-alg
   :name "rsm-genetic-alg"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.0"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Genetic Algorithms."
 

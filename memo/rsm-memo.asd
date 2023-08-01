@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-memo.asd,v 1.2 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: rsm-memo.asd,v 1.2 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-memo
   :name "rsm-memo"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.0"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Memoizing functions"
     
@@ -42,3 +42,4 @@
   (or (funcall (intern (symbol-name '#:run-memo-tests)
 		       (find-package 'rsm.memo.test)))
       (error "test-op failed")))
+

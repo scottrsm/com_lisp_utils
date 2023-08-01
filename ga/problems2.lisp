@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: problems2.lisp,v 1.4 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: problems2.lisp,v 1.4 2003/09/10 22:19:25 scottrsm Exp $
 ;;;; *************************************************************************
 
 

@@ -8,7 +8,7 @@
 **** Author:        R. Scott McIntire
 **** Date Started:  Aug 2003
 ****
-**** $Id: random.h,v 1.3 2003/09/10 22:19:25 rscottmcintire Exp $
+**** $Id: random.h,v 1.3 2003/09/10 22:19:25 scottrsm Exp $
 ****
 **** *************************************************************************
 */

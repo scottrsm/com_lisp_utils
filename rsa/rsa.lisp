@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsa.lisp,v 1.6 2003/10/21 21:00:31 rscottmcintire Exp $
+;;;; $Id: rsa.lisp,v 1.6 2003/10/21 21:00:31 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -94,7 +94,7 @@ increases when the number of trials, <trials>, is larger."
 
 (defun get-next-prob-prime (p-start &key (trials 100))
   "Find a probable prime starting at <p-start> (p-start assumed odd) and
-incrementing by 2 until a probable prime is found.  Test each value
+incrementing by 2 until a probable prime is found. Test each value
 using <trials> number of random values with the function prob-prime-p."
   (when (= (mod p-start 2) 0)
     (incf p-start))

@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: mpoly.lisp,v 1.7 2003/10/24 21:10:12 rscottmcintire Exp $
+;;;; $Id: mpoly.lisp,v 1.7 2003/10/24 21:10:12 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.mpoly)
@@ -601,7 +601,7 @@ multiply polynomials of different types."))
 ;;; + :: [Poly | Number] -> ([Poly | Number]) -> [Poly | Number]
 (defun + (&rest ps)
   "Adds one or more polynomials (or numbers). With respect to 
-mutiple arguments, the behavior is the same as the Common Lisp '+'
+multiple arguments, the behavior is the same as the Common Lisp '+'
 function."
   (let* ((polys (rsm.filter:filter ps #'numberp))
          (nums (set-difference ps polys)))

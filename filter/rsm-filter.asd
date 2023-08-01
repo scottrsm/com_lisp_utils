@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-filter.asd,v 1.5 2003/09/17 01:50:03 rscottmcintire Exp $
+;;;; $Id: rsm-filter.asd,v 1.5 2003/09/17 01:50:03 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-filter
   :name "rsm-filter"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.1"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Filters for lists and trees."
 

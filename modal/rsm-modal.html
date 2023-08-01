@@ -1,7 +1,7 @@
 <head><title>rsm.modal</title>
 <meta http-equiv="Expires" content="Jan 1 1990 00:00:00 GMT" />
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-<meta name="Copyright" content="R. Scott McIntire 2003 &lt;rscottmcintire@users.sourceforge.net&gt;" />
+<meta name="Copyright" content="R. Scott McIntire 2003 &lt;scottrsm@gmail.com&gt;" />
 <meta name="description" content="Modal Logic" />
 <meta name="author" content="R. Scott McIntire" />
 <meta name="keywords" content="modal, logic, Lisp" />
@@ -38,8 +38,8 @@ set-modal-system    :</b> Set the modal system to use.
 <em style="color:blue">&lt;world&gt;</em>, check that the proposition <em style="color:blue">&lt;prop&gt;</em> is true in the modal system
 <em style="color:blue">&lt;modal-system&gt;</em>.</pre>
 <h2 style="color=darkblue">clear-modal-systems<b style="color=blue"> ()</b></h2><pre>Clear the modal systems hash table.</pre>
-<h2 style="color=darkblue">defmodal<b style="color=blue">&nbsp; &nbsp(sym &amp;key kripke props primitive-truth-function)</b></h2><pre>Produces a modal logic system based on a kripke structure
-and a basic proposition structure. The kripke form is 
+<h2 style="color=darkblue">defmodal<b style="color=blue">&nbsp; &nbsp(sym &amp;key Kripke props primitive-truth-function)</b></h2><pre>Produces a modal logic system based on a Kripke structure
+and a basic proposition structure. The Kripke form is 
 ((agent world (worlds))...)
 This means that agent <em style="color:blue">&lt;agent&gt;</em> in world <em style="color:blue">&lt;world&gt;</em> believes that the worlds in 
 <em style="color:blue">&lt;worlds&gt;</em> are possible.
@@ -53,7 +53,7 @@ the supporting logic functions will use this modal system as the basis
 of all logic queries. Change the modal system that the query functions work
 on by using the macro set-modal-system.<div style="color:darkgreen">
 Example: (rsm.modal:defmodal my-world  </div>
-             :kripke 
+             :Kripke 
            ((0 1 (1 2)) (0 2 (1 2)) (0 3 (3))
                         (1 1 (1 3)) (1 2 (2 1)) (1 3 (3 2)))
            :props
@@ -64,13 +64,13 @@ Throw an error if <em style="color:blue">&lt;error&gt;</em> is true and the moda
 otherwise, return nil.</pre>
 <h2 style="color=darkblue">is-true?<b style="color=blue">&nbsp; &nbsp(world prop &amp;key (modal-system *modal-system*))</b></h2><pre>Is proposition <em style="color:blue">&lt;prop&gt;</em> true in world <em style="color:blue">&lt;world&gt;</em> in 
 modal system <em style="color:blue">&lt;modal-system&gt;</em>?</pre>
-<h2 style="color=darkblue">make-world<b style="color=blue">&nbsp; &nbsp(name kripke-info prop-info &amp;key
- (primitive-truth-function +primitive-truth-function+))</b></h2><pre>Make a modal system from a form representing a kripke structure 
+<h2 style="color=darkblue">make-world<b style="color=blue">&nbsp; &nbsp(name Kripke-info prop-info &amp;key
+ (primitive-truth-function +primitive-truth-function+))</b></h2><pre>Make a modal system from a form representing a Kripke structure 
 and a form representing the truth of primitive propositions in the 
 in various worlds. There is also a keyword option that defines a default
 truth function which is used when the <em style="color:blue">&lt;prop-info&gt;</em> does not define the 
 logic of a particular world and proposition.
-kripke-info has the form: '((agent world (worlds)) ...)
+Kripke-info has the form: '((agent world (worlds)) ...)
 This means that agent <em style="color:blue">&lt;agent&gt;</em> in world <em style="color:blue">&lt;world&gt;</em> believes that the worlds in 
 <em style="color:blue">&lt;worlds&gt;</em> are possible.<div style="color:darkgreen">
 Example: </div>

@@ -4,10 +4,10 @@
 ;;;;
 ;;;; Name:          foreign-loader.lisp
 ;;;; Purpose:       Loads foreign libraries
-;;;; Author:        Kevin M. Rosenberg
+;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Feb 2002
 ;;;;
-;;;; $Id: foreign-loader.lisp,v 1.6 2003/09/10 22:19:25 rscottmcintire Exp $
+;;;; $Id: foreign-loader.lisp,v 1.6 2003/09/10 22:19:25 scottrsm Exp $
 ;;;;
 ;;;; *************************************************************************
 

@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-mpoly.asd,v 1.5 2003/10/24 17:32:34 rscottmcintire Exp $
+;;;; $Id: rsm-mpoly.asd,v 1.5 2003/10/24 17:32:34 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -19,9 +19,9 @@
 
 (defsystem :rsm-mpoly
   :name "rsm-mpoly"
-  :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
+  :author "R. Scott McIntire <scottrsm@gmail.com>."
   :version "1.2"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Modular arithmetic."
 
@@ -44,3 +44,4 @@
   (or (funcall (intern (symbol-name '#:run-mpoly-tests)
 		       (find-package 'rsm.mpoly.test)))
       (error "test-op failed")))
+

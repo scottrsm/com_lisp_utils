@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: bitcomp.lisp,v 1.5 2003/10/05 22:34:29 rscottmcintire Exp $
+;;;; $Id: bitcomp.lisp,v 1.5 2003/10/05 22:34:29 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.bitcomp)

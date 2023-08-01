@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: rsm-cache.asd,v 1.5 2003/09/17 02:06:02 rscottmcintire Exp $
+;;;; $Id: rsm-cache.asd,v 1.5 2003/09/17 02:06:02 scottrsm Exp $
 ;;;; *************************************************************************
 
 
@@ -21,7 +21,7 @@
   :name "rsm-cache"
   :author "R. Scott McIntire <rscottmcintire@users.sourceforge.net>."
   :version "1.1"
-  :maintainer "Kevin M. Rosenberg <kmr@debian.org>."
+  :maintainer "R. Scott McIntire <scottrsm@gmail.com>."
   :licence "BSD-style"
   :description "Cache objects of high numeric rank."
 

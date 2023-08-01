@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: bitcomp-test.lisp,v 1.2 2003/10/04 14:47:16 rscottmcintire Exp $
+;;;; $Id: bitcomp-test.lisp,v 1.2 2003/10/04 14:47:16 scpttrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:cl-user)

@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: genetic-alg.lisp,v 1.5 2003/09/14 16:54:27 rscottmcintire Exp $
+;;;; $Id: genetic-alg.lisp,v 1.5 2003/09/14 16:54:27 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.genetic-alg)

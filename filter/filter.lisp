@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: filter.lisp,v 1.4 2003/09/17 01:50:03 rscottmcintire Exp $
+;;;; $Id: filter.lisp,v 1.4 2003/09/17 01:50:03 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.filter)

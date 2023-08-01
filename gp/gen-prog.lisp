@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: gen-prog.lisp,v 1.4 2004/02/17 03:18:08 rscottmcintire Exp $
+;;;; $Id: gen-prog.lisp,v 1.4 2004/02/17 03:18:08 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.gen-prog)
@@ -19,7 +19,7 @@
 ;;;; PARAMETERS AND THEIR DEFAULT VALUES.
 
 (defparameter *cross-over-func-prob* 0.9
-  "This probability of selecting a subtree (as opposed to a leaf) of a
+  "This probability of selecting a sub-tree (as opposed to a leaf) of a
 program tree crossing over program trees.")
 
 (defparameter *cross-over-prob* 0.9

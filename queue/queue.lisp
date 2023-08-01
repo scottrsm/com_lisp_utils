@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: queue.lisp,v 1.5 2003/10/23 15:43:31 rscottmcintire Exp $
+;;;; $Id: queue.lisp,v 1.5 2003/10/23 15:43:31 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package rsm.queue)

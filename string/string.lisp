@@ -7,7 +7,7 @@
 ;;;; Author:        R. Scott McIntire
 ;;;; Date Started:  Aug 2003
 ;;;;
-;;;; $Id: string.lisp,v 1.6 2003/10/10 14:38:11 rscottmcintire Exp $
+;;;; $Id: string.lisp,v 1.6 2003/10/10 14:38:11 scottrsm Exp $
 ;;;; *************************************************************************
 
 (in-package #:rsm.string)
@@ -215,7 +215,7 @@ for missing values."
                                           (header nil))
   "Takes a file name and a key word of delimiters and returns a table - 
 a list of lists of strings. The rows are the lines of the file; within 
-each row, the nth column element is the the nth (non-null) delimited string. 
+each row, the nth column element is the nth (non-null) delimited string. 
 If <missing-value-marker> is non nil, then <missing-value-marker> will be used
 for missing values. If <header> is non-nil and a number, the first <header>
 lines will be discarded. Otherwise, if <header> is non-nil, then the first
@@ -250,7 +250,7 @@ line will be discarded."
 (defun file->number-table (file-name &key (delims " ") 
                                           (missing-value-marker nil)
                                           (header nil))
-  "Takes a file name and a a key word of delimiters and returns a table - 
+  "Takes a file name and a key word of delimiters and returns a table - 
 a list of lists of numbers. The rows are the lines of the file; within 
 each row, the nth column element is the nth (non-null) number. If 
 <missing-value-marker> is non nil, then <missing-value-marker> will be used

@@ -20,7 +20,7 @@ Example:
  So, even if the modulus is prime, you must tell the software with this
  keyword that it is ok to use the simplification X^mod = X.
 
-NOTE: X mod p is a field if and ony if p is prime.
+NOTE: X mod p is a field if and only if p is prime.
 
 
 2).
