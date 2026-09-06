@@ -25,7 +25,7 @@ and the ASDF package builder.
 - queue     -- Queueing Functions.
 - rand      -- Discrete Random Number Generator.
 - random    -- Cellular Automata Random Number Generator.
-- rsm       -- RSA Encryption Algorithms.
+- rsa       -- RSA Encryption Algorithms.
 - string    -- String Manipulation.
 
 
